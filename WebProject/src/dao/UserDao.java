@@ -42,9 +42,93 @@ public class UserDao implements CrudDao<User, String> {
 		}
 		return user;
 	}
-
+	
 	@Override
-	public Optional<User> findbyId(String id) {
+	public User save(User user, String path) {
+		// TODO Auto-generated method stub
+		if(users.containsKey(user.getUserName()))
+		{
+			return null;
+		}else {
+			
+			BufferedWriter bw = null;
+			try {
+				File userFile =  new File(path + "/users.txt");
+				FileWriter fileWriter = new FileWriter(userFile,true);  
+				
+				bw = new BufferedWriter(fileWriter);
+				bw.newLine();
+				bw.write(user.toString());
+			}catch (IOException e) {
+	    		System.out.println("An error occurred.");
+	    		e.printStackTrace();
+		    }finally{		    	
+			   try{
+			      if(bw!=null) {
+			    	  bw.close();
+			      }
+			   }catch(Exception ex){
+			       System.out.println("Error in closing the BufferedWriter"+ex);
+			    }
+			}
+			
+			users.put(user.getUserName(), user);
+			
+			return user;
+		}
+	}
+	
+	@Override
+	public void update(User oldObject, User newObject, String path) {
+		// TODO Auto-generated method stub
+		
+		File fileToBeModified = new File(path + "/users.txt");
+        String oldContent = ""; 
+        BufferedReader reader = null;      
+        FileWriter writer = null;
+        BufferedWriter bw = null;
+         
+        try{
+            reader = new BufferedReader(new FileReader(fileToBeModified));
+             
+            //Reading all the lines of input text file into oldContent
+             
+            String line = reader.readLine();
+             
+            while (line != null) {
+                oldContent = oldContent + line + System.lineSeparator();       
+                line = reader.readLine();
+            }
+            //Replacing oldString with newString in the oldContent
+            String oldString = oldObject.toString();
+            String newString = newObject.toString();
+             
+            String newContent = oldContent.replaceAll(oldString, newString);
+             
+            //Rewriting the input text file with newContent
+             
+            writer = new FileWriter(fileToBeModified);
+            bw = new BufferedWriter(writer);
+            bw.write(newContent.trim());//-------------
+            
+            users.put(newObject.getUserName(), newObject);
+        }catch (IOException e) {
+    		System.out.println("An error occurred.");
+    		e.printStackTrace();
+        }finally{ 	
+ 		   try{
+ 		      if(reader!=null){
+ 		    	 reader.close();
+ 		    	 bw.close();
+ 		      }
+ 		   }catch(Exception ex){
+ 		       System.out.println("Error in closing the BufferedReader"+ex);
+ 		    }
+ 		}
+	}
+	
+	@Override
+	public User findbyId(String id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -55,17 +139,7 @@ public class UserDao implements CrudDao<User, String> {
 		return users.values();
 	}
 
-	@Override
-	public void save(User t) {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void update(User t, String[] params) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	public void delete(User t) {
@@ -100,12 +174,20 @@ public class UserDao implements CrudDao<User, String> {
 						users.put(userName, new User(userName, password, name, lastName, role, gander, isDeleted));
 					}
 				}
-	
 			}else {
 				createAdmins(path);
 			}
-		} catch (Exception e) {
-			// TODO: handle exception
+		} catch (IOException e) {
+    		System.out.println("An error occurred.");
+    		e.printStackTrace();
+		}finally{ 	
+		   try{
+		      if(in!=null) {
+		    	  in.close();
+		      }
+		   }catch(Exception ex){
+		       System.out.println("Error in closing the BufferedReader"+ex);
+		    }
 		}
 	}
 	
@@ -118,12 +200,13 @@ public class UserDao implements CrudDao<User, String> {
 			
 			User admin1 = new User("lesa","lesa","Aleksandar","Radovanovic",Role.admin,Gender.male,false);
 			User admin2 = new User("aleksej","aleksej","Aleksej","Lukic",Role.admin,Gender.male,true);
-			FileWriter fileWriter = new FileWriter(userFile);  
+			FileWriter fileWriter = new FileWriter(userFile,true);  
 			
 			bw = new BufferedWriter(fileWriter);				
 			bw.write(admin1.toString());
 			bw.newLine();
 			bw.write(admin2.toString());
+			
 			
 			users.put(admin1.getUserName(),admin1);
 			users.put(admin2.getUserName(), admin2);
@@ -132,7 +215,6 @@ public class UserDao implements CrudDao<User, String> {
     		System.out.println("An error occurred.");
     		e.printStackTrace();
 	    }finally{
-	    	
 		   try{
 		      if(bw!=null) {
 		    	  bw.close();
@@ -142,5 +224,4 @@ public class UserDao implements CrudDao<User, String> {
 		    }
 		}
 	}
-	
 }

@@ -42,20 +42,25 @@ public class UserService {
 		}
 	}
 	
-	@GET
-	@Path("/test")
-	public String test() {
-		return "Rest is working";
-	}
-	
-	@GET
-	@Path("/getAllUsers")
+	@POST
+	@Path("/singUp")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Collection<User> getAllUsers() {
+	@Consumes(MediaType.APPLICATION_JSON)
+	public User singUp(@Context HttpServletRequest request, User user) {
+		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
 		
-		UserDao dao = (UserDao) ctx.getAttribute("userDao");
-
-		return dao.getAll();
+		if(user != null) {
+			String path = ctx.getRealPath("");
+			User svedUser = userDao.save(user, path);
+			if(svedUser != null) {
+				request.getSession().setAttribute("user", svedUser);
+				return svedUser;
+			}else {
+				return null;
+			}
+		}else {
+			return null;
+		}		
 	}
 	
 	@POST
@@ -74,4 +79,48 @@ public class UserService {
 		return Response.status(200).build();
 	}
 	
+	@GET
+	@Path("/logout")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public boolean logout(@Context HttpServletRequest request) {
+	  User user = null;
+	  user =  (User)request.getSession().getAttribute("user");
+	  if (user != null) {
+		  System.out.println(user.toString());
+		  request.getSession().invalidate();
+	  }else {
+		return false;
+	  }
+	  return true;
+	}
+	
+	@POST
+	@Path("/update")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public User update(@Context HttpServletRequest request, User userUpdate) {
+		User oldUser = null;
+		oldUser =  (User)request.getSession().getAttribute("user");
+		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
+		String path =  ctx.getRealPath("");
+		
+		if(oldUser != null) {
+			userDao.update(oldUser, userUpdate, path);
+			
+			request.getSession().setAttribute("user", userUpdate);
+			return userUpdate;
+		}else {
+			return null;
+		}
+	}
+	
+	@GET
+	@Path("/getAllUsers")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Collection<User> getAllUsers() {
+		UserDao dao = (UserDao) ctx.getAttribute("userDao");
+		return dao.getAll();
+	}	
 }
+                            

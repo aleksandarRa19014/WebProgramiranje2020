@@ -3,16 +3,18 @@ package dao;
 import java.util.Collection;
 import java.util.Optional;
 
+import beans.User;
+
 
 public interface CrudDao<T,ID> {
 	
-		Optional<T> findbyId(ID id);
+		T findbyId(ID id);
 	
 	 	Collection<T> getAll();
      
-	    void save(T t);
+	 	T save(T t, String path);
 	     
-	    void update(T t, String[] params);
+	    void update(T oldObject,T newObject, String path);
 	     
 	    void delete(T t);
 
