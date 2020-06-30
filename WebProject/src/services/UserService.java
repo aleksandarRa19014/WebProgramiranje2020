@@ -25,15 +25,20 @@ import beans.User;
 import dao.UserDao;
 import dto.UserDto;
 
-@Path("")
+@Path("/userService")
 public class UserService {
+	
+	@GET
+	@Path("/test")
+	public String test() {
+		return "REST is working.";
+	}
 	
 	@Context
 	ServletContext ctx;
 	
 	@PostConstruct
 	public void initialization() {
-		System.out.println("INICIJALIZACIJA");
 		
 		if(ctx.getAttribute("userDao") == null) {
 			String contextPath = ctx.getRealPath("");
@@ -70,29 +75,31 @@ public class UserService {
 	public Response login(@Context HttpServletRequest request, UserDto userDto) {
 		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
 		
+		System.out.println("LOGINNNN------------------------------------");
+		System.out.println(userDto.getUserName());
+		System.out.println(userDto.getPassword());
+		
 		User loggedUser = userDao.find(userDto.getUserName(), userDto.getPassword());
 		if (loggedUser == null) {
 			return Response.status(400).entity("Invalid username and/or password").build();
 		}else {
+			System.out.println(loggedUser.toString());
 			request.getSession().setAttribute("user", loggedUser);
 		}
-		return Response.status(200).build();
+		return Response.status(200).entity(loggedUser).build();
 	}
 	
-	@GET
+	@POST
 	@Path("/logout")
-	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public boolean logout(@Context HttpServletRequest request) {
-	  User user = null;
-	  user =  (User)request.getSession().getAttribute("user");
-	  if (user != null) {
-		  System.out.println(user.toString());
-		  request.getSession().invalidate();
-	  }else {
-		return false;
-	  }
-	  return true;
+	@Produces(MediaType.APPLICATION_JSON)
+	public void logout(@Context HttpServletRequest request) {
+		 System.out.println("-------------logout");
+		 User u = (User)request.getSession().getAttribute("user");
+		 if(u != null) {
+			 System.out.println(u.getLastName());
+			 request.getSession().invalidate();
+		 }
 	}
 	
 	@POST
@@ -122,5 +129,13 @@ public class UserService {
 		UserDao dao = (UserDao) ctx.getAttribute("userDao");
 		return dao.getAll();
 	}	
+	
+	@GET
+	@Path("/currentUser")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public User login(@Context HttpServletRequest request) {
+		return (User) request.getSession().getAttribute("user");
+	}
 }
                             
