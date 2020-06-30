@@ -51,21 +51,20 @@ public class UserService {
 	@Path("/singUp")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public User singUp(@Context HttpServletRequest request, User user) {
+	public Response singUp(@Context HttpServletRequest request, User user) {
 		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
+		String path = ctx.getRealPath("");
+		user.setRole(Role.guest);
+		user.setDeleted(false);
 		
-		if(user != null) {
-			String path = ctx.getRealPath("");
-			User svedUser = userDao.save(user, path);
-			if(svedUser != null) {
-				request.getSession().setAttribute("user", svedUser);
-				return svedUser;
-			}else {
-				return null;
-			}
+		User svedUser = userDao.save(user, path);
+		if(svedUser != null) {
+			request.getSession().setAttribute("user", svedUser);
+			return Response.status(200).entity(svedUser).build();
 		}else {
-			return null;
-		}		
+			return Response.status(400).entity("Username exist!").build();
+		}
+			
 	}
 	
 	@POST

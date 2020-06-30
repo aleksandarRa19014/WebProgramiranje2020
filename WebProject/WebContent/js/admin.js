@@ -1,6 +1,22 @@
 $(document).ready(function() {
 	
 	
+		$.ajax({
+		  	url: "/WebProject/rest/userService/currentUser",
+			type: "GET",
+			contentType: "application/json",
+			dataType: "JSON"
+		  
+		}).done(function( data, textStatus, jqXHR ) {
+			
+			$("#curentUser").html(data.name);
+			$("#curentUser").addClass( "glyphicon glyphicon-user" );
+	
+		}).fail(function() {
+		    
+		});
+	
+	
 	$("#logout").click(function(event) {
 	
 		  event.preventDefault();	
