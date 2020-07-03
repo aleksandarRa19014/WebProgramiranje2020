@@ -1,6 +1,19 @@
 $(document).ready(function() {
 	
-	$("#logout").click(function() {
+	$(".link").click(function(e) {
+	    e.preventDefault();
+	    $('.content-container div').hide();
+	    $('#' + $(this).data('rel')).show();
+	});
+	
+	
+	 $("#link5").click(function(){
+		 alert("sss");
+		    $("#content5").load("test.html");
+		  });
+	
+	
+	/*$("#logout").click(function() {
 		 
 
 		  $.ajax({
