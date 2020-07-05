@@ -29,8 +29,8 @@ public class UserDao implements CrudDao<User, String> {
 		loadUsers(contextPath);
 	}
 	
-	public User find(String username, String password) {
-
+	public User find(String username, String password, String path) {
+		loadUsers(path);
 		if (!users.containsKey(username)) {
 
 			return null;

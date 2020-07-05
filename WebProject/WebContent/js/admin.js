@@ -49,22 +49,31 @@ $(document).ready(function() {
 			}).done(function( data, textStatus, jqXHR ) {
 				
 				$.each(data,function(i,item){
-				    $("#t02 tbody").append(
-				        "<tr class='user'>"
-				    		+"<td>"+item.userName+"</td>"
-				            +"<td>"+item.name+"</td>"
-				            +"<td>"+item.lastName+"</td>"
-				            +"<td>"+item.gander+"</td>"
-				            +"<td>"+item.role+"</td>"
-				         );  
-				    if(item.role.trim() != "admin"){
-				    	console.log("sss");
-				    	 $("#t02 .user").append("<td><a style='cursor:pointer;'><i style='font-size:24px;' class='fa fa-edit'></i> Izmeni ulogu korisniku</a> </td>"
-							        +"</tr>" ); 
-				    }else{
-				    	$("#t02 tbody").append("</tr>"); 
-				    }
-				        
+					
+					if(item.role.trim() == "admin"){
+					    $("#t02 tbody").append(
+					        "<tr class='user'>"
+					    		+"<td>"+item.userName+"</td>"
+					            +"<td>"+item.name+"</td>"
+					            +"<td>"+item.lastName+"</td>"
+					            +"<td>"+item.gander+"</td>"
+					            +"<td>"+item.role+"</td>"
+					            + "</tr>"
+					         ); 
+					}else{
+						 $("#t02 tbody").append(
+							        "<tr class='user'>"
+							    		+"<td>"+item.userName+"</td>"
+							            +"<td>"+item.name+"</td>"
+							            +"<td>"+item.lastName+"</td>"
+							            +"<td>"+item.gander+"</td>"
+							            +"<td>"+item.role+"</td>"   
+							            + "</tr>"
+							         ); 
+						
+					}
+					
+			
 				 });
 		
 			}).fail(function() {
@@ -121,7 +130,7 @@ $(document).ready(function() {
 		
 		
 		function goTo(){
-			alert("SSSSSSSSSSS ")
+			
 			window.location = "http://localhost:8090/WebProject/";
 		}
 	

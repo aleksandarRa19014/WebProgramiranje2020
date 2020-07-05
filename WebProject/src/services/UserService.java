@@ -67,6 +67,29 @@ public class UserService {
 			
 	}
 	
+	
+	@POST
+	@Path("/createHost")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response createHost(@Context HttpServletRequest request, User user) {
+		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
+		String path = ctx.getRealPath("");
+		user.setRole(Role.host);
+		user.setDeleted(false);
+		
+		User svedUser = userDao.save(user, path);
+		if(svedUser != null) {
+			request.getSession().setAttribute("user", svedUser);
+			return Response.status(200).entity(svedUser).build();
+		}else {
+			return Response.status(400).entity("Username exist!").build();
+		}
+			
+	}
+	
+	
+	
 	@POST
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -78,7 +101,9 @@ public class UserService {
 		System.out.println(userDto.getUserName());
 		System.out.println(userDto.getPassword());
 		
-		User loggedUser = userDao.find(userDto.getUserName(), userDto.getPassword());
+		String path = ctx.getRealPath("");
+		
+		User loggedUser = userDao.find(userDto.getUserName(), userDto.getPassword(),path);
 		if (loggedUser == null) {
 			return Response.status(400).entity("Invalid username and/or password").build();
 		}else {
