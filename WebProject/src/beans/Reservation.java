@@ -10,6 +10,7 @@ public class Reservation {
 	private double price;
 	private String text;
 	private User guest;
+	
 	private StatusReser statusReser;
 	
 	public Reservation() {
