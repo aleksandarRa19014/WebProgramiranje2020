@@ -1,0 +1,93 @@
+<!DOCTYPE html>  
+ <html>  
+      <head>  
+           <title>Webslesson Tutorial | Multiple Image Upload</title>  
+           <script src="jquery-3.3.1.min.js"></script>
+           <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />  
+          
+      </head>  
+      <body>  
+           <br /><br />  
+           <div class="container">  
+                <form id="uploadForm" action="upload.php" method="post">  
+                     <div id="gallery"></div><div style="clear:both;"></div><br /><br />  
+                     <div class="col-md-4" align="right">  
+                          <label>Upload Multiple Image</label>  
+                     </div>  
+                     <div class="col-md-4">  
+                          <input name="files[]" type="file" id= "imgInp" multiple />  
+                     </div>  
+                     <div class="col-md-4">  
+                          <input type="submit" value="Submit" />  
+                     </div>  
+                     <div style="clear:both"></div>  
+                </form>  
+                
+                
+           </div>  
+           <div class="item" id="imgContainer"></div>
+      </body>  
+ </html>  
+ <script>  
+ $(document).ready(function(){  
+      $('#uploadForm').on('submit', function(e){  
+           e.preventDefault();  
+           $.ajax({  
+        	   url: "/WebProject/rest/testService/saveImg",  
+                type: "POST",  
+                data: JSON.stringify(images),  
+                contentType: "application/json",
+        		dataType: "JSON"
+               
+           }).done(function( data, textStatus, jqXHR ) {
+       		   	    
+        	   for(let i= 0; i < data.length; i++){	
+        		   var img = $('<img />').attr('src', data[i]).appendTo('#imgContainer');
+        	   }
+        	      
+		   		    console.log(data);
+		
+		   	}).fail(function() {
+		   	    
+		   	});  
+      });  
+      
+      
+     var images = [];
+      
+      function readURL(input) {
+    	    if (input.files && input.files[0]) {
+    	    	
+    	    	
+    	    	
+    	    	for(let i= 0; i < input.files.length; i++){
+    	    		
+    	    		var reader = new FileReader();
+    	            
+    	            reader.onload = function (e) {
+    	               
+    	                
+    	                
+    	                
+    	                
+    	                 images.push( e.target.result); 
+    	            }
+    	           
+    	            
+    	            reader.readAsDataURL(input.files[i]);	
+    	    	}
+    	        
+    	    }
+    	}
+    	 
+    	 $("#imgInp").change(function(){
+    	     readURL(this);
+    	     $("#btnClear").show();
+    	 });
+    	 
+      
+ });  
+ 
+
+ 
+ </script>  

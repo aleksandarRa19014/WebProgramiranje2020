@@ -2,7 +2,6 @@ package beans;
 
 public class Address {
 	private String street;
-	private int streetNumber;
 	private int zipCode;
 	private String place;
 	
@@ -15,13 +14,16 @@ public class Address {
 	}
 
 
-	public Address(String street, int streetNumber, int zipCode, String place) {
+
+
+	public Address(String street, int zipCode, String place) {
 		super();
 		this.street = street;
-		this.streetNumber = streetNumber;
 		this.zipCode = zipCode;
 		this.place = place;
 	}
+
+
 
 
 	public String getStreet() {
@@ -29,19 +31,13 @@ public class Address {
 	}
 
 
+
+
 	public void setStreet(String street) {
 		this.street = street;
 	}
 
 
-	public int getStreetNumber() {
-		return streetNumber;
-	}
-
-
-	public void setStreetNumber(int streetNumber) {
-		this.streetNumber = streetNumber;
-	}
 
 
 	public int getZipCode() {
@@ -49,9 +45,13 @@ public class Address {
 	}
 
 
+
+
 	public void setZipCode(int zipCode) {
 		this.zipCode = zipCode;
 	}
+
+
 
 
 	public String getPlace() {
@@ -59,11 +59,11 @@ public class Address {
 	}
 
 
+
+
 	public void setPlace(String place) {
 		this.place = place;
 	}
-	
-	
-	
-	
+
+
 }

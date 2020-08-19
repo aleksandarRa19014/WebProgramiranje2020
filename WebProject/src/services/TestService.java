@@ -33,23 +33,11 @@ public class TestService {
 	@Path("/saveImg")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response saveImg(@Context HttpServletRequest request, String path) {
-			
-		 BufferedImage bImage = null;
-         try {
-             File initialImage = new File(path);
-             bImage = ImageIO.read(initialImage);
- 
-             
-             ImageIO.write(bImage, "jpg", new File(path));
-             
- 
-         } catch (IOException e) {
-               System.out.println("Exception occured :" + e.getMessage());
-         }
-         System.out.println("Images were written succesfully.");
+	public Response saveImg(@Context HttpServletRequest request, String[] path) {
+		
+		
          
-         return Response.status(200).build();
+         return Response.status(200).entity(path).build();
     
 		
 	}

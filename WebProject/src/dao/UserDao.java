@@ -25,9 +25,6 @@ public class UserDao implements CrudDao<User, String> {
 
 	}
 	
-	public UserDao(String contextPath) {
-		loadUsers(contextPath);
-	}
 	
 	public User find(String username, String password, String path) {
 		loadUsers(path);
@@ -46,6 +43,7 @@ public class UserDao implements CrudDao<User, String> {
 	@Override
 	public User save(User user, String path) {
 		// TODO Auto-generated method stub
+		loadUsers(path);
 		if(users.containsKey(user.getUserName()))
 		{
 			return null;
@@ -53,7 +51,7 @@ public class UserDao implements CrudDao<User, String> {
 			
 			BufferedWriter bw = null;
 			try {
-				File userFile =  new File(path + "/users.txt");
+				File userFile =  new File(path+"/users.txt");
 				FileWriter fileWriter = new FileWriter(userFile,true);  
 				
 				bw = new BufferedWriter(fileWriter);
@@ -65,6 +63,7 @@ public class UserDao implements CrudDao<User, String> {
 		    }finally{		    	
 			   try{
 			      if(bw!=null) {
+			    	  bw.flush();
 			    	  bw.close();
 			      }
 			   }catch(Exception ex){
@@ -117,9 +116,12 @@ public class UserDao implements CrudDao<User, String> {
     		e.printStackTrace();
         }finally{ 	
  		   try{
- 		      if(reader!=null){
+ 		      if(reader!=null){	  
+ 		    	  
+ 		    	 bw.flush();
+ 		    	 bw.close(); 
  		    	 reader.close();
- 		    	 bw.close();
+ 		    	
  		      }
  		   }catch(Exception ex){
  		       System.out.println("Error in closing the BufferedReader"+ex);
@@ -151,6 +153,9 @@ public class UserDao implements CrudDao<User, String> {
 		BufferedReader in = null;
 		try {
 			File file = new File(path + "/users.txt");
+			
+			System.out.println("File exists : " + file.exists());
+			System.out.println(path);
 			if(file.exists()) {
 				
 				in = new BufferedReader(new FileReader(file));
@@ -199,7 +204,7 @@ public class UserDao implements CrudDao<User, String> {
 			System.out.println("File created: " + userFile.getName());
 			
 			User admin1 = new User("lesa","lesa","Aleksandar","Radovanovic",Role.admin,Gender.male,false);
-			User admin2 = new User("aleksej","aleksej","Aleksej","Lukic",Role.admin,Gender.male,true);
+			User admin2 = new User("aleksej","aleksej","Aleksej","Lukic",Role.admin,Gender.male,false);
 			FileWriter fileWriter = new FileWriter(userFile,true);  
 			
 			bw = new BufferedWriter(fileWriter);				
@@ -217,6 +222,7 @@ public class UserDao implements CrudDao<User, String> {
 	    }finally{
 		   try{
 		      if(bw!=null) {
+		    	  bw.flush();
 		    	  bw.close();
 		      }
 		   }catch(Exception ex){

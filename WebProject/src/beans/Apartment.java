@@ -1,12 +1,17 @@
 package beans;
 
+import java.time.LocalTime;
 import java.util.Collection;
 import java.util.Date;
+import java.util.UUID;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
 
 public class Apartment {
 	
-	private String idApartment;
+	private UUID id;
+	private String nameApartment;
 	private TypeApartment typeApart;
 	private int numRoom;
 	private int numOfGuests;
@@ -17,23 +22,29 @@ public class Apartment {
 	private Collection<Comment> comments;
 	private Collection<String> pathToImgs;
 	private double price;
-	private String checkInTime;
-	private String chackOutTime;
+	private LocalTime checkInTime = LocalTime.of(14, 0, 0, 0);
+	private LocalTime chackOutTime = LocalTime.of(10, 0, 0, 0);
 	private StatusApartment status;
-	private Collection<String> amenites;
+	private Collection<Amenity> amenites;
+	
+	@JsonBackReference
 	private Collection<Reservation> reservations;
 	
 	public Apartment() {
 		super();
+		this.id = UUID.randomUUID();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Apartment(String idApartment, TypeApartment typeApart, int numRoom, int numOfGuests, Location location,
+	public Apartment(String nameApartment, TypeApartment typeApart, int numRoom, int numOfGuests, Location location,
 			Date relaseDate, Collection<Date> availabilityByDates, User host, Collection<Comment> comments,
-			Collection<String> pathToImgs, double price, String checkInTime, String chackOutTime,
-			StatusApartment status, Collection<String> amenites, Collection<Reservation> reservations) {
+			Collection<String> pathToImgs, double price, LocalTime checkInTime, LocalTime chackOutTime,
+			StatusApartment status, Collection<Amenity> amenites, Collection<Reservation> reservations) {
 		super();
-		this.idApartment = idApartment;
+		
+		this.id = UUID.randomUUID();
+		
+		this.nameApartment = nameApartment;
 		this.typeApart = typeApart;
 		this.numRoom = numRoom;
 		this.numOfGuests = numOfGuests;
@@ -51,12 +62,20 @@ public class Apartment {
 		this.reservations = reservations;
 	}
 
-	public String getIdApartment() {
-		return idApartment;
+	public UUID getId() {
+		return id;
 	}
 
-	public void setIdApartment(String idApartment) {
-		this.idApartment = idApartment;
+	public void setId(UUID id) {
+		this.id = id;
+	}
+
+	public String getNameApartment() {
+		return nameApartment;
+	}
+
+	public void setNameApartment(String nameApartment) {
+		this.nameApartment = nameApartment;
 	}
 
 	public TypeApartment getTypeApart() {
@@ -139,19 +158,19 @@ public class Apartment {
 		this.price = price;
 	}
 
-	public String getCheckInTime() {
+	public LocalTime getCheckInTime() {
 		return checkInTime;
 	}
 
-	public void setCheckInTime(String checkInTime) {
+	public void setCheckInTime(LocalTime checkInTime) {
 		this.checkInTime = checkInTime;
 	}
 
-	public String getChackOutTime() {
+	public LocalTime getChackOutTime() {
 		return chackOutTime;
 	}
 
-	public void setChackOutTime(String chackOutTime) {
+	public void setChackOutTime(LocalTime chackOutTime) {
 		this.chackOutTime = chackOutTime;
 	}
 
@@ -163,11 +182,11 @@ public class Apartment {
 		this.status = status;
 	}
 
-	public Collection<String> getAmenites() {
+	public Collection<Amenity> getAmenites() {
 		return amenites;
 	}
 
-	public void setAmenites(Collection<String> amenites) {
+	public void setAmenites(Collection<Amenity> amenites) {
 		this.amenites = amenites;
 	}
 
@@ -177,5 +196,6 @@ public class Apartment {
 
 	public void setReservations(Collection<Reservation> reservations) {
 		this.reservations = reservations;
-	}	
+	}
+
 }

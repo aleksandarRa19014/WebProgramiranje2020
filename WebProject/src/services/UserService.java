@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.Iterator;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -41,9 +42,7 @@ public class UserService {
 	public void initialization() {
 		
 		if(ctx.getAttribute("userDao") == null) {
-			String contextPath = ctx.getRealPath("");
-			System.out.println(contextPath);
-			ctx.setAttribute("userDao", new UserDao(contextPath));
+			ctx.setAttribute("userDao", new UserDao());
 		}
 	}
 	
@@ -53,7 +52,7 @@ public class UserService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response singUp(@Context HttpServletRequest request, User user) {
 		UserDao userDao = (UserDao) ctx.getAttribute("userDao");
-		String path = ctx.getRealPath("");
+		String path = ctx.getRealPath("/");
 		user.setRole(Role.guest);
 		user.setDeleted(false);
 		
@@ -80,7 +79,7 @@ public class UserService {
 		
 		User svedUser = userDao.save(user, path);
 		if(svedUser != null) {
-			request.getSession().setAttribute("user", svedUser);
+			
 			return Response.status(200).entity(svedUser).build();
 		}else {
 			return Response.status(400).entity("Username exist!").build();
@@ -158,7 +157,7 @@ public class UserService {
 	@Path("/currentUser")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public User login(@Context HttpServletRequest request) {
+	public User curentUser(@Context HttpServletRequest request) {
 		return (User) request.getSession().getAttribute("user");
 	}
 }

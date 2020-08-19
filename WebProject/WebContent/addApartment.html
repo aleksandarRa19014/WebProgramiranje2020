@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Hotel Reservation Form</title>
+    <script src="jquery-3.3.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" >
+   <link rel="stylesheet" type="text/css" href="css/addApartment.css">
+   
+   <script src="js/addApartment.js"></script>
+  </head>
+  <body>
+    <div class="testbox">
+    <form id="forma">
+	      <div class="banner">
+	        <h1>Kreiranje apartmana</h1>
+	      </div>
+	      
+	      <br/>
+	      <fieldset>
+	      
+		        <legend>Detalji aprtmana</legend>
+		        <div class="columns">
+		        
+			           <div class="item">
+			            <label for="lname">Ime apartmana<span>*</span></label>
+			            <input id="nameApart" name="nameApart" type="text"/>
+			           </div>
+			          	
+			          <div class="item">
+						  <label for="lname">Tip apartmana<span>*</span></label>
+						  <br/>
+					      <select id="typeApart" name="typeApart">
+						      <option value="" disabled selected></option>
+						      <option value="21">Ceo Apartman</option>
+						       <option value="21">Soba</option>
+						  </select>
+			          </div>
+			 
+			          <div class="item">
+			            <label for="lname">Broj Soba<span>*</span></label>
+			            <input id="numbRoom" name="numbRoom" type="text" />
+			          </div>
+			          <div class="item">
+			            <label for="address">Broj Gostiju<span>*</span></label>
+			            <input id="numbGuests" name="numbGuests" type="text" />
+			          </div>
+			          <div class="item">
+			            <label for="zip">Cena nocenja u dinarima<span>*</span></label>
+			            <input id="price" name="price" type="text" />
+			          </div>
+
+		        </div>
+	          
+	      </fieldset>
+	      
+	      
+	      <br/>
+	      <fieldset>
+	      <legend>Loakacija apartmana</legend>
+	      <div class="columns">
+	       
+		           <div class="item">
+		            <label for="lname">Ulica i broj<span>*</span></label>
+		            <input id="address" type="text" name="address" />
+		           </div>
+		          	
+		          <div class="item">
+		            <label for="lname">Naseljeno mesto<span>*</span></label>
+		            <input id="place" type="text" name="place" />
+		          </div>
+		          
+		          <div class="item">
+		            <label for="lname">Postanski broj apartmana<span>*</span></label>
+		            <input id="zipCode" type="text" name="zipCode" />
+		          </div>
+
+		          </div>
+	          
+	      </fieldset>
+	      
+	      
+	      
+	      <br/>
+	      <fieldset>
+	      <legend>Datumi za izadavanje</legend>
+	      
+		      <div class="columns">
+		      
+			      <div class="item">
+				      <label for="checkindate">od <span>*</span></label>
+				      <input id="checkindate" type="date" name="checkindate" />
+				      <i class="fas fa-calendar-alt"></i>
+			      </div>
+			      
+			      <div class="item">
+				      <label for="checkoutdate">do<span>*</span></label>
+				      <input id="checkoutdate" type="date" name="checkoutdate" />
+				      <i class="fas fa-calendar-alt"></i>
+			      </div>
+			  </div>
+	          
+	      </fieldset>
+	      
+	      <br/>
+	      <fieldset>
+	      <legend>Sadrzaj apartmana</legend>
+	      <div class="columns">
+	      
+		      <div class="item">
+		      
+			       <label for="address">Sadrzaj kupatila: </label>
+		            <div class="status-item">
+			            <label><input type="checkbox" name="name" value= "Djakuzi"> Djakuzi </label>
+			            <label><input type="checkbox" name="name" value= "Sauna"> Sauna </label>
+			            <label><input type="checkbox" name="name" value= "Kada"> Kada </label>
+			            <br/>
+			            <label><input type="checkbox" name="name" value= "Tus Kada"> Tus Kada </label>
+			            <label><input type="checkbox" name="name" value= "Hidromasazna Tus kabina"> Hidromasazna Tus kabina </label>
+			            <label><input type="checkbox" name="name" value= "Bide">  Bide </label>
+			            <br/>
+			            <label><input type="checkbox" name="name" value= "Fen za Kosu"> Fen za Kosu </label>   
+		          </div>
+		          
+			  </div>
+			  
+			  <div class="item">
+			  
+			        <label for="address">Sadrzaj sobe: </label>
+		            <div class="status-item">
+		            
+			            <label><input type="checkbox" name="amenites" value= "Bracni Krevet">  Bracni Krevet </label>
+			            <label><input type="checkbox" name="amenites" value= "Single krevet">  Single krevet </label>
+			            <label><input type="checkbox" name="amenites" value= "Orman"> Orman </label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Radni Sto"> Radni Sto </label>
+			            <label><input type="checkbox" name="amenites" value= "Deciji Krevetac"> Deciji Krevetac </label>
+			            <label><input type="checkbox" name="amenites" value= "Pegla za ves"> Pegla za ves</label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Daska za Peglanje"> Daska za Peglanje </label>
+			            
+		    		 </div>
+		     </div>
+		     
+		     <div class="item">
+		     
+			        <label for="address">Tehnologija: </label>
+		            <div class="status-item">
+		            
+			            <label><input type="checkbox" name="amenites" value= "WiFi">  WiFi </label>
+			            <label><input type="checkbox" name="amenites" value= "Internet"> Internet </label>
+			            <label><input type="checkbox" name="amenites" value= "Kablovski Kanali"> Kablovski Kanali </label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Satelitski Kanali"> Satelitski Kanali </label>
+			            <label><input type="checkbox" name="amenites" value= "TV"> TV </label>
+			            <label><input type="checkbox" name="amenites" value= "Mini Linija"> Mini Linija</label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Racunar"> Racunar </label>
+			            
+		     		</div>
+		     </div>
+		     
+		     
+		     <div class="item">
+			        <label for="address">Kuhinja: </label>
+		            <div class="status-item">
+			            <label><input type="checkbox" name="amenites" value= "Sporet">  Sporet </label>
+			            <label><input type="checkbox" name="amenites" value= "Indukciona ploca"> Indukciona ploca </label>
+			            <label><input type="checkbox" name="amenites" value= "Mikrotalasna"> Mikrotalasna </label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Kombinovani Frizider"> Kombinovani Frizider </label>
+			            <label><input type="checkbox" name="amenites" value= "Frizider"> Frizider </label>
+			            <br/>
+			            <label><input type="checkbox" name="amenites" value= "Trpezarijski Sto i Stolice"> Trpezarijski Sto i Stolice</label>
+	
+			            <label><input type="checkbox" name="amenites" value= "Deo za Rucavanje">  Deo za Rucavanje </label>
+			            
+		     		</div>
+		     </div>
+		     
+	      </div>
+	      </fieldset>
+
+	      <br/>
+	      <fieldset>
+	      	  <legend>Slike apartmana</legend>
+	      	  <input name="files[]" type="file"   id="imgInp" value="izaberi" multiple/>
+	      	  <button id="btnClear" style="display: none">Ukloni slike</button>	
+		      <div class="columns">
+		      
+			      
+			      <div class="item" id="imgContainer">
+					<br/>
+			      	
+		         </div>
+		      
+		     </div>
+	     </fieldset>
+	      
+	      
+	      
+	      <div class="btn-block">
+	      <button type="submit" id="createApartment">Kreiraj apartman</button>
+	      </div>
+    </form>
+    </div>
+    
+     <div class="item" id="imgCont">
+					</div>
+    
+  </body>
+</html>

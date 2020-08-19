@@ -94,7 +94,7 @@ $(document).ready(function() {
 			  }).done(function( data, textStatus, jqXHR) {
 				   
 				  	alert(data.role);
-					goTo();
+					goTo(data.role);
 				}).fail(function( data, textStatus, jqXHR) {
 					alert(data.responseText);
 				});
@@ -104,8 +104,15 @@ $(document).ready(function() {
 	});	
 	
 	
-	function goTo(){
-			window.location = "http://localhost:8090/WebProject/adminPage.html";	
+		function goTo(role){
+		
+		if(role == "admin"){
+			window.location = "http://localhost:8090/WebProject/adminPage.html";
+		}else if(role == "host"){
+			window.location = "http://localhost:8090/WebProject/hostPage.html";
+		}else if(role == ""){
+			//window.location = "http://localhost:8090/WebProject/";
+		}	
 	}
 	
 });

@@ -39,47 +39,6 @@ $(document).ready(function() {
 		});
 		
 		
-		$("#getAllUsers").one( "click", function() {	
-			$.ajax({
-			  	url: "/WebProject/rest/userService/getAllUsers",
-				type: "GET",
-				contentType: "application/json",
-				dataType: "JSON"
-			  
-			}).done(function( data, textStatus, jqXHR ) {
-				
-				$.each(data,function(i,item){
-					
-					if(item.role.trim() == "admin"){
-					    $("#t02 tbody").append(
-					        "<tr class='user'>"
-					    		+"<td>"+item.userName+"</td>"
-					            +"<td>"+item.name+"</td>"
-					            +"<td>"+item.lastName+"</td>"
-					            +"<td>"+item.gander+"</td>"
-					            +"<td>"+item.role+"</td>"
-					            + "</tr>"
-					         ); 
-					}else{
-						 $("#t02 tbody").append(
-							        "<tr class='user'>"
-							    		+"<td>"+item.userName+"</td>"
-							            +"<td>"+item.name+"</td>"
-							            +"<td>"+item.lastName+"</td>"
-							            +"<td>"+item.gander+"</td>"
-							            +"<td>"+item.role+"</td>"   
-							            + "</tr>"
-							         ); 
-						
-					}
-					
-			
-				 });
-		
-			}).fail(function() {
-			    
-			});
-		});
 			
 		$("#logout").click(function(event) {
 		
@@ -99,10 +58,7 @@ $(document).ready(function() {
 			
 			
 		});
-		
-	
-		
-		
+
 		
 		$('#gsearch').keyup(function(){
 		    // Search Text
