@@ -12,6 +12,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 
+import beans.Amenity;
 import beans.Apartment;
 
 import org.json.simple.JSONArray;
@@ -22,8 +23,12 @@ public class ApartmentDao implements CrudDao<Apartment, String> {
 	
 	
 	private Map<String, Apartment> apartments = new HashMap<>();
+	private Map<String, Amenity> amanties = new HashMap<>();
 	
-	
+	public ApartmentDao() {
+		super();
+	}
+
 	
 	@Override
 	public Apartment findbyId(String id) {
@@ -62,8 +67,9 @@ public class ApartmentDao implements CrudDao<Apartment, String> {
 						FileWriter fileWriter = new FileWriter(apartmantFile,true);  
 						
 						bw = new BufferedWriter(fileWriter);
-						bw.newLine();
+						
 						bw.write(jsonString);
+						bw.newLine();
 					}catch (IOException e) {
 			    		System.out.println("An error occurred.");
 			    		e.printStackTrace();
@@ -101,11 +107,7 @@ public class ApartmentDao implements CrudDao<Apartment, String> {
 		
 	}
 
-	public ApartmentDao() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-
+	
 
 
 	

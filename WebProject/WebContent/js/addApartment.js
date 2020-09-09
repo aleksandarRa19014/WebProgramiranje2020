@@ -1,6 +1,11 @@
 $(document).ready(function() {
 	
 	
+	 
+	var images = [];
+	
+	var amenites = [];
+	
 	var user;
 	
 	$.ajax({
@@ -18,12 +23,35 @@ $(document).ready(function() {
 	});
 	
 	
+	$.ajax({
+	  	url: "/WebProject/rest/AdminService/getAmenities",
+		type: "GET",
+		contentType: "application/json",
+		dataType: "JSON"
+	  
+	}).done(function( data, textStatus, jqXHR ) {
+		
+		$.each(data,function(i,item){
+			
+			 $('#containerSadrzaj')
+			 	.append(" <label for=' "+ item.name + " '>" + item.name + "</label></div> ") 
+		        .append(" <input type='checkbox' id=' " + item.id +" ' name='interest' value="+ item.name +"> ")
+		        
+		        .append("<br>");
+		    
+			
+			 
+	  		 
+			
+		});
+
+	}).fail(function() {
+	    
+	});
 	
 	
-	 
-	var images = [];
 	
-	var amenites = [];
+	
 	
 	 $.validator.addMethod("endDate", function(value, element) {
          var startDate = $('#checkindate').val();
@@ -125,8 +153,8 @@ $(document).ready(function() {
 				  
 				  
 				  $("input:checked").each(function(){
-						 amenites.push(this.value);
-						  console.log(amenites);
+						 amenites.push(this.id);
+						 console.log(amenites);
 				  });
 				  
 				  var s = JSON.stringify({

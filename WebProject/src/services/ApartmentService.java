@@ -34,12 +34,14 @@ import javax.ws.rs.core.Response;
 import org.apache.tomcat.util.codec.binary.Base64;
 
 import beans.Address;
+import beans.Amenity;
 import beans.Apartment;
 import beans.Location;
 import beans.Role;
 import beans.StatusApartment;
 import beans.TypeApartment;
 import beans.User;
+import dao.AdminDao;
 import dao.ApartmentDao;
 import dto.ApartmentDto;
 
@@ -66,6 +68,9 @@ public class ApartmentService {
 		if (ctx.getAttribute("aptDao") == null) {
 			
 			ctx.setAttribute("aptDao", new ApartmentDao());
+		}else if(ctx.getAttribute("adminDao") == null) {
+			
+			ctx.setAttribute("adminDao", new AdminDao());
 		}
 	}
 	
@@ -77,15 +82,17 @@ public class ApartmentService {
 	public Response addApartment(@Context HttpServletRequest request, ApartmentDto apartmentDto) throws ParseException, IOException, URISyntaxException {
 			
 			User curentUser = (User) request.getSession().getAttribute("user");
-			if (curentUser.getRole() == Role.guest ||  curentUser.getRole() == Role.admin) {
-				return Response.status(403).entity("Forbidden").build();
+			if(curentUser != null) {
+				if (curentUser.getRole() == Role.guest ||  curentUser.getRole() == Role.admin) {
+					return Response.status(403).entity("Forbidden").build();
+				}
 			}
-			
 		
 		    Collection<String> paths = new ArrayList<String>(); ;
 		
 		    ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
 		
+		    AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
 		
 			String contextPath = ctx.getRealPath("/");
 
@@ -124,6 +131,9 @@ public class ApartmentService {
 
 			
 			newApartment.setStatus(StatusApartment.inastive);
+			
+		
+			
 
 			
 			String dat =  DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now());
@@ -149,8 +159,6 @@ public class ApartmentService {
 						
 						paths.add(path);
 						
-						
-						
 						osf.write(imgBytes);
 						osf.flush();
 						osf.close();
@@ -163,6 +171,14 @@ public class ApartmentService {
 					}
 				
 			}
+			
+			
+			
+			adminDao.readAmenity(contextPath);
+			
+			System.out.println(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
+			newApartment.setAmenites(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
+			
 			
 			newApartment.setPathToImgs(paths);;
  			

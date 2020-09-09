@@ -2,6 +2,9 @@
 <head>
 	<meta charset="UTF-8">
 	<script src="jquery-3.3.1.min.js"></script>
+	
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
+	
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="css/admin.css">	
@@ -29,7 +32,7 @@
 		                                </ul>
 		                            </li>
 		                            <li><a href="#">Welcome</a></li>
-		                            <li><a href="#">Services</a></li>
+		                            <li><a  class="link"  href="#" id="getAmenity" data-rel="crtAmenity"  >Kreiraj sadrzaj apartmana</a></li>
 		                            <li><a href="createHost.html" >Kreiranje domacina</a></li>
 		                            <li><a class="link" href="#" id="getAllUsers" data-rel="allUsers">Svi korisnici</a></li>
 		                        </ul>
@@ -131,14 +134,39 @@
 				
 				
 				<div class="container-fluid">
-				  <h1>Kreiranje domacina</h1>	
+				  <h1>Kreiranje sadrzaj apartmana</h1>	
 				  <div  class="row">
-					    <div id = "crtUser" class="col-sm-3" style="background-color:lavender;">
-					    			
-									<a >ssssssssssss</a>
+					    <div id = "crtAmenity"  class="col-sm-3"  style="background-color:lavender;">
+					    		
+			    		 
+					            <label for="lname">Ime sadrzaja apartmana<span>*</span></label>
+					            <input id="nameApart" name="nameApart" type="text"/>
+					           
+					          	
+					         	<button id="createAmanity">Kreiraj</button>	
+	
 					    </div>
 					    <div class="col-sm-3" style="background-color:lavenderblush;">
-									2					
+									<label for="lname">Lista sadrzaja apartmana</label>	
+									
+									
+									<table style="width:100%" id="t03" >
+												
+												
+											 
+											   <thead>
+												  <tr>
+												  	<th>Naziv Sadrzaja apartmana</th>
+												  	<th></th>
+												  	<th></th> 
+												  </tr>
+											  </thead>
+											  <tbody id="tbody03">
+								
+											  
+											  </tbody>
+							    </table>
+							
 						</div>
 					    <div class="col-sm-3" style="background-color:lavender;">
 					    			3

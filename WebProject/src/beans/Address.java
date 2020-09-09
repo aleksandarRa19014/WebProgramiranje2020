@@ -6,8 +6,6 @@ public class Address {
 	private String place;
 	
 	
-	
-	
 	public Address() {
 		super();
 		// TODO Auto-generated constructor stub

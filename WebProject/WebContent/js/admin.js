@@ -27,6 +27,76 @@ $(document).ready(function() {
 		});
 		
 		
+		$("#getAmenity").one( "click", function() { 
+				$.ajax({
+				  	url: "/WebProject/rest/AdminService/getAmenities",
+					type: "GET",
+					contentType: "application/json",
+					dataType: "JSON"
+				  
+				}).done(function( data, textStatus, jqXHR ) {
+					
+					$.each(data,function(i,item){
+						
+				  		 $("#t03 #tbody03").append(
+							        "<tr>"
+				  				+"<td>"+item.name+"</td>"
+				  				+"<td><button class='delAmenity'>Obrisi</button>	</td>"
+				  				+"<td><button class='updAmenity'>Izmeni</button>	</td>"
+							    +"</tr>" );
+						
+						
+					});
+		
+				}).fail(function() {
+				    
+				});
+		});
+		
+		
+		$("#createAmanity").click(function(e) {
+		  		console.log("sasasa");	
+		  		
+		  		
+		  		
+		  		if($('#nameApart').val() != "" && $('#nameApart').val().length >= 2)
+		  		{
+		  			
+		  			e.preventDefault();
+		  			
+		  			var s = JSON.stringify({name: $('#nameApart').val()});
+		  			
+		  		   $.ajax({
+						url: "/WebProject/rest/AdminService/addAmenity",
+						type: "POST",
+						contentType: "application/json",	
+						data: s,
+						dataType: "JSON"	
+				   }).done(function( data, textStatus, jqXHR) {
+					   
+
+				  		 $("#t03 #tbody03").append(
+							        "<tr>"
+				  				+"<td>"+data.name+"</td>"
+				  				+"<td><button class='delAmenity'>Obrisi</button>	</td>"
+				  				+"<td><button class='updAmenity'>Izmeni</button>	</td>"
+							    +"</tr>" );
+					   
+					  
+					}).fail(function( data, textStatus, jqXHR) {
+						
+						alert(data.responseText);
+						
+					});
+				    
+		  		}else{
+		  			alert("Ime sadrzaja apartmana mora da sadrzi vise od 2 znaka.")
+		  		}
+		
+		});
+		
+		
+		
 		$(".link").click(function(e) {
 		    e.preventDefault();
 		    $('#cont').children().hide();

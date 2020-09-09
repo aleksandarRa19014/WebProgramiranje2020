@@ -1,6 +1,7 @@
 package dto;
 
 import java.util.Collection;
+
 import beans.Location;
 
 import beans.User;
@@ -31,11 +32,11 @@ public class ApartmentDto {
 		// TODO Auto-generated constructor stub
 	}
 
-	public ApartmentDto(String idApartment, String typeApart, String numRoom, String numOfGuests, String street,
+	public ApartmentDto(String nameApartment, String typeApart, String numRoom, String numOfGuests, String street,
 			String zipCode, String place, String relaseDate, User host, Collection<String> images, String price,
 			String checkInTime, String chackOutTime, String status, Collection<String> amenites) {
 		super();
-		this.nameApartment = idApartment;
+		this.nameApartment = nameApartment;
 		this.typeApart = typeApart;
 		this.numRoom = numRoom;
 		this.numOfGuests = numOfGuests;
@@ -56,8 +57,8 @@ public class ApartmentDto {
 		return nameApartment;
 	}
 
-	public void setNameApartment(String idApartment) {
-		this.nameApartment = idApartment;
+	public void setNameApartment(String nameApartment) {
+		this.nameApartment = nameApartment;
 	}
 
 	public String getTypeApart() {
@@ -171,6 +172,8 @@ public class ApartmentDto {
 	public void setAmenites(Collection<String> amenites) {
 		this.amenites = amenites;
 	}
-    
+	
+	
+
 	
 }
