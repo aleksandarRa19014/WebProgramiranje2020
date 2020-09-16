@@ -1,8 +1,11 @@
 package beans;
 
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -16,8 +19,8 @@ public class Apartment {
 	private int numRoom;
 	private int numOfGuests;
 	private Location location;
-	private Date relaseDate;
-	private Collection<Date> availabilityByDates;
+	private List<LocalDate> datesForRent = new ArrayList<LocalDate>();
+	private List<LocalDate> datesAvailable = new ArrayList<LocalDate>();
 	private User host;
 	private Collection<Comment> comments;
 	private Collection<String> pathToImgs;
@@ -36,21 +39,20 @@ public class Apartment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Apartment(String nameApartment, TypeApartment typeApart, int numRoom, int numOfGuests, Location location,
-			Date relaseDate, Collection<Date> availabilityByDates, User host, Collection<Comment> comments,
-			Collection<String> pathToImgs, double price, LocalTime checkInTime, LocalTime chackOutTime,
-			StatusApartment status, Collection<Amenity> amenites, Collection<Reservation> reservations) {
+	public Apartment(UUID id, String nameApartment, TypeApartment typeApart, int numRoom, int numOfGuests,
+			Location location, List<LocalDate> datesForRent, List<LocalDate> datesAvailable, User host,
+			Collection<Comment> comments, Collection<String> pathToImgs, double price, LocalTime checkInTime,
+			LocalTime chackOutTime, StatusApartment status, Collection<Amenity> amenites,
+			Collection<Reservation> reservations) {
 		super();
-		
-		this.id = UUID.randomUUID();
-		
+		this.id = id;
 		this.nameApartment = nameApartment;
 		this.typeApart = typeApart;
 		this.numRoom = numRoom;
 		this.numOfGuests = numOfGuests;
 		this.location = location;
-		this.relaseDate = relaseDate;
-		this.availabilityByDates = availabilityByDates;
+		this.datesForRent = datesForRent;
+		this.datesAvailable = datesAvailable;
 		this.host = host;
 		this.comments = comments;
 		this.pathToImgs = pathToImgs;
@@ -110,20 +112,20 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public Date getRelaseDate() {
-		return relaseDate;
+	public List<LocalDate> getDatesForRent() {
+		return datesForRent;
 	}
 
-	public void setRelaseDate(Date relaseDate) {
-		this.relaseDate = relaseDate;
+	public void setDatesForRent(List<LocalDate> datesForRent) {
+		this.datesForRent = datesForRent;
 	}
 
-	public Collection<Date> getAvailabilityByDates() {
-		return availabilityByDates;
+	public List<LocalDate> getDatesAvailable() {
+		return datesAvailable;
 	}
 
-	public void setAvailabilityByDates(Collection<Date> availabilityByDates) {
-		this.availabilityByDates = availabilityByDates;
+	public void setDatesAvailable(List<LocalDate> datesAvailable) {
+		this.datesAvailable = datesAvailable;
 	}
 
 	public User getHost() {
@@ -197,5 +199,7 @@ public class Apartment {
 	public void setReservations(Collection<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+    
+	
 
 }

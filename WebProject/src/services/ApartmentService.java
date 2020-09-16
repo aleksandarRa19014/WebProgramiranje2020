@@ -12,6 +12,7 @@ import java.net.URL;
 import java.nio.file.Paths;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -100,16 +101,19 @@ public class ApartmentService {
 			
 			
 			Apartment newApartment = new Apartment();
-			Location location = new Location();
-			Address address = new Address();
 			
-			address.setPlace(apartmentDto.getPlace());
-			address.setStreet(apartmentDto.getStreet());
-			address.setZipCode(Integer.parseInt(apartmentDto.getZipCode() ));
 			
-			location.setAddress(address);
+			newApartment.setLocation(apartmentDto.getLocation());
 			
-			newApartment.setLocation(location);
+			
+			LocalDate startDate = LocalDate.parse(apartmentDto.getStartDate());
+			LocalDate endDate = LocalDate.parse(apartmentDto.getEndDate());
+
+			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+				newApartment.getDatesForRent().add(date);
+			}
+			
+			
 			
 			newApartment.setHost(apartmentDto.getHost());
 			

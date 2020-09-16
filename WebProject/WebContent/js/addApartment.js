@@ -152,10 +152,19 @@ $(document).ready(function() {
 				  event.preventDefault();
 				  
 				  
+				  console.log("-------------------"+ $("#checkin").val());
+				  
 				  $("input:checked").each(function(){
 						 amenites.push(this.id);
 						 console.log(amenites);
 				  });
+				  
+				  
+				  
+				  adrs = new Address($("#address").val(), $("#place").val(), $("#zipCode").val());
+				  
+				  loc = new Location(parseFloat($("#geoWid").val()), parseFloat($("#geoLen").val()), adrs )
+				  
 				  
 				  var s = JSON.stringify({
 					  nameApartment: $("#nameApart").val(),
@@ -164,11 +173,11 @@ $(document).ready(function() {
 					  numOfGuests: $("#numbGuests").val(),
 					  price: $("#price").val(),
 					  host : user,
-					  street: $("#address").val(),
-					  place:  $("#place").val(),
-					  zipCode: $("#zipCode").val(),
-					  checkInTime: $("#checkindate").val(),
-					  chackOutTime: $("#checkoutdate").val(),
+					  location : loc,
+					  startDate : $("#checkindate").val(),
+					  endDate :  $("#checkoutdate").val(),
+					  checkInTime: $("#checkin").val(),
+					  chackOutTime: $("#checkout").val(),
 					  amenites : amenites,
 					  images: images,
 					    
@@ -236,5 +245,71 @@ $(document).ready(function() {
     	$("#imgContainer").html('');
     	$("#btnClear").hide();
     });
+    
+    //********************
+    var map = L.map('map').setView([44.142760, 20.542520], 7);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
+
+    var searchControl = L.esri.Geocoding.geosearch().addTo(map);
+
+    var results = L.layerGroup().addTo(map);
+
+    searchControl.on('results', function (data) {
+      results.clearLayers();
+      for (var i = data.results.length - 1; i >= 0; i--) {
+        results.addLayer(L.marker(data.results[i].latlng));
+        console.log(data.results[i]);
+      }
+    });
+    
+    
+    var popup = L.popup();
+    
+    function onMapClick(e) {
+    	var str = e.latlng.toString();
+    	var res = str.substring(7, 16);
+    	var res2 = str.substring(18, 27);
+    	
+    	 $("#geoWid").val(res);
+         $("#geoLen").val(res2);
+    	
+    	
+    	console.log("lat" + res + "----lng" + res2);
+    	
+		popup
+			.setLatLng(e.latlng)
+			.setContent(e.latlng.toString())
+			.openOn(map);
+	}
+    map.on('click', onMapClick);
+    
+    //*****
+    
+    
+    
+    class Location {
+        constructor(geoWid, geoLen, address) {
+            this.latitude = geoWid
+            this.longitude = geoLen
+            this.address = address
+        }
+    }
+
+    class Address {
+        constructor(street, place, postalCode) {
+            this.street = street
+            this.place = place
+            this.zipCode = postalCode
+        }
+    }
+    
+    
+    
+    
+    
+    
     
 });

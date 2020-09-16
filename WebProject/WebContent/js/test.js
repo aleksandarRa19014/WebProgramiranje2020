@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	$(".link").click(function(e) {
+/*	$(".link").click(function(e) {
 	    e.preventDefault();
 	    $('.content-container div').hide();
 	    $('#' + $(this).data('rel')).show();
@@ -92,7 +92,7 @@ $(document).ready(function() {
 	        
 	        console.log($(this).val());
 	    });
-	    
+	    */
 	    
 	    
 	    
@@ -117,6 +117,8 @@ $(document).ready(function() {
 	      for (var i = data.results.length - 1; i >= 0; i--) {
 	        results.addLayer(L.marker(data.results[i].latlng));
 	        console.log(data.results[i]);
+	        
+	        
 	      }
 	    });
 	    

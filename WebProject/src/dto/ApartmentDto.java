@@ -12,13 +12,11 @@ public class ApartmentDto {
 	private String numRoom;
 	private String numOfGuests;
 	
-	private String street;
-	
-	private String zipCode;
-	private String place;
 
+
+	private String startDate;
+	private String endDate;
 	
-	private String relaseDate;
 	private User host;
 	private Collection<String> images;
 	private String price;
@@ -27,31 +25,27 @@ public class ApartmentDto {
 	private String status;
 	private Collection<String> amenites;
 	
+	private Location location;
+	
+	
 	public ApartmentDto() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-
-	public ApartmentDto(String nameApartment, String typeApart, String numRoom, String numOfGuests, String street,
-			String zipCode, String place, String relaseDate, User host, Collection<String> images, String price,
-			String checkInTime, String chackOutTime, String status, Collection<String> amenites) {
-		super();
-		this.nameApartment = nameApartment;
-		this.typeApart = typeApart;
-		this.numRoom = numRoom;
-		this.numOfGuests = numOfGuests;
-		this.street = street;
-		this.zipCode = zipCode;
-		this.place = place;
-		this.relaseDate = relaseDate;
-		this.host = host;
-		this.images = images;
-		this.price = price;
-		this.checkInTime = checkInTime;
-		this.chackOutTime = chackOutTime;
-		this.status = status;
-		this.amenites = amenites;
+	
+	
+	
+	public Location getLocation() {
+		return location;
 	}
+
+
+
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+
 
 	public String getNameApartment() {
 		return nameApartment;
@@ -85,36 +79,20 @@ public class ApartmentDto {
 		this.numOfGuests = numOfGuests;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getStartDate() {
+		return startDate;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setStartDate(String startDate) {
+		this.startDate = startDate;
 	}
 
-	public String getZipCode() {
-		return zipCode;
+	public String getEndDate() {
+		return endDate;
 	}
 
-	public void setZipCode(String zipCode) {
-		this.zipCode = zipCode;
-	}
-
-	public String getPlace() {
-		return place;
-	}
-
-	public void setPlace(String place) {
-		this.place = place;
-	}
-
-	public String getRelaseDate() {
-		return relaseDate;
-	}
-
-	public void setRelaseDate(String relaseDate) {
-		this.relaseDate = relaseDate;
+	public void setEndDate(String endDate) {
+		this.endDate = endDate;
 	}
 
 	public User getHost() {
@@ -172,8 +150,7 @@ public class ApartmentDto {
 	public void setAmenites(Collection<String> amenites) {
 		this.amenites = amenites;
 	}
-	
-	
 
+	
 	
 }

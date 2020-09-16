@@ -1,8 +1,8 @@
 package beans;
 public class Location {
 	
-	private double latitude;
-	private double longitude;
+	private float latitude;
+	private float longitude;
 	private Address address;
 	
 	
@@ -12,7 +12,7 @@ public class Location {
 	}
 
 
-	public Location(double latitude, double longitude, Address address) {
+	public Location(float latitude, float longitude, Address address) {
 		super();
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -20,12 +20,12 @@ public class Location {
 	}
 
 
-	public double getLatitude() {
+	public float getLatitude() {
 		return latitude;
 	}
 
 
-	public void setLatitude(double latitude) {
+	public void setLatitude(float latitude) {
 		this.latitude = latitude;
 	}
 
@@ -35,7 +35,7 @@ public class Location {
 	}
 
 
-	public void setLongitude(double longitude) {
+	public void setLongitude(float longitude) {
 		this.longitude = longitude;
 	}
 

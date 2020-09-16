@@ -17,14 +17,6 @@ label.error {
     width: 400px;
     height: 400px;
 }
-.content-container div {
-    display: none;
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-}
 
 img {
   border: 1px solid #ddd;
@@ -35,6 +27,10 @@ img {
 
 
 body { margin:0; padding:0; }
-    #map { position: absolute; top:0; bottom:0; right:0; left:0; }
+    #map {
+  height: 200px;
+  width: 50%;
+  background-color: powderblue;
+}
 
 .mapouter { display: none }

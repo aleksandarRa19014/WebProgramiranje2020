@@ -8,10 +8,12 @@ import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -59,6 +61,8 @@ public class AdminService {
 			if (curentUser.getRole() != Role.admin) {
 				return Response.status(403).entity("Forbidden").build();
 			}
+		}else {
+			return Response.status(403).entity("Forbidden").build();
 		}
 		
 		Amenity newAmennity = new Amenity();
@@ -88,4 +92,23 @@ public class AdminService {
 		adminDao.readAmenity(contextPath);
 		return adminDao.getAllAmenities();
 	}	
+	
+	
+
+	@DELETE
+	public Response deleteAmenity(@QueryParam("id") String id, @Context HttpServletRequest request) {
+		User curentUser = (User) request.getSession().getAttribute("user");
+		if(curentUser != null) {
+			if (curentUser.getRole() != Role.admin) {
+				return Response.status(403).entity("Forbidden").build();
+			}
+		}else {
+			return Response.status(403).entity("Forbidden").build();
+		}
+	
+		return Response.status(200).build();
+	}
+	
+	
+	
 }
