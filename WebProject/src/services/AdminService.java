@@ -105,8 +105,17 @@ public class AdminService {
 		}else {
 			return Response.status(403).entity("Forbidden").build();
 		}
+		
+		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
+		
+		String contextPath = ctx.getRealPath("/");
+		
+		if(adminDao.deleteAmenity(id, contextPath)) {
+			return Response.status(200).build();
+		}else {
+			return Response.status(400).entity("Bad Request").build();
+		}
 	
-		return Response.status(200).build();
 	}
 	
 	

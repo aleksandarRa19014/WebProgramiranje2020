@@ -38,12 +38,7 @@ $(document).ready(function() {
 					
 					$.each(data,function(i,item){
 						
-				  		 $("#t03 #tbody03").append(
-							        "<tr>"
-				  				+"<td>"+item.name+"</td>"
-				  				+"<td><button class='delAmenity'>Obrisi</button>	</td>"
-				  				+"<td><button class='updAmenity'>Izmeni</button>	</td>"
-							    +"</tr>" );
+				  		 $("#t03 #tbody03").append("<tr id=" +item.id+ " data-name='"+item.name +"'><td>"+item.name+"</td><td><button class='btn btn-info btn-xs btn-edit'>Edit</button><button class='btn btn-danger btn-xs btn-delete'>Delete</button></td></tr>");
 						
 						
 					});
@@ -75,12 +70,8 @@ $(document).ready(function() {
 				   }).done(function( data, textStatus, jqXHR) {
 					   
 
-				  		 $("#t03 #tbody03").append(
-							        "<tr>"
-				  				+"<td>"+data.name+"</td>"
-				  				+"<td><button class='delAmenity'>Obrisi</button>	</td>"
-				  				+"<td><button class='updAmenity'>Izmeni</button>	</td>"
-							    +"</tr>" );
+				  		 $("#t03 #tbody03").append("<tr id=" +data.id+ " data-name='"+data.name +"'><td>"+data.name+"</td><td><button class='btn btn-info btn-xs btn-edit'>Edit</button><button class='btn btn-danger btn-xs btn-delete'>Delete</button></td></tr>");
+							
 					   
 					  
 					}).fail(function( data, textStatus, jqXHR) {
@@ -198,8 +189,73 @@ $(document).ready(function() {
 			
 			window.location = "http://localhost:8090/WebProject/";
 		}
-	
+		
+		
+		 $("body").on("click", ".btn-edit", function(){
 
+		        var name = $(this).parents("tr").attr('data-name');
+
+		       
+
+		    
+
+		        $(this).parents("tr").find("td:eq(0)").html('<input name="edit_name" value="'+name+'">');
+
+		        
+
+		    
+
+		        $(this).parents("tr").find("td:eq(1)").prepend("<button class='btn btn-info btn-xs btn-update'>Update</button><button class='btn btn-warning btn-xs btn-cancel'>Cancel</button>")
+
+		        $(this).hide();
+
+		    });
+
+		   
+
+		    $("body").on("click", ".btn-cancel", function(){
+
+		        var name = $(this).parents("tr").attr('data-name');
+
+		        
+
+		    
+
+		        $(this).parents("tr").find("td:eq(0)").text(name);
+
+		   
+
+		        $(this).parents("tr").find(".btn-edit").show();
+
+		        $(this).parents("tr").find(".btn-update").remove();
+
+		        $(this).parents("tr").find(".btn-cancel").remove();
+
+		    });
+
+		   
+
+		    $("body").on("click", ".btn-update", function(){
+
+		        var name = $(this).parents("tr").find("input[name='edit_name']").val();
+
+		        $(this).parents("tr").find("td:eq(0)").text(name);
+
+		        $(this).parents("tr").attr('data-name', name);
+
+		        $(this).parents("tr").find(".btn-edit").show();
+
+		        $(this).parents("tr").find(".btn-cancel").remove();
+
+		        $(this).parents("tr").find(".btn-update").remove();
+
+		    });
+	
+		    $("body").on("click", ".btn-delete", function(){
+
+		        $(this).parents("tr").remove();
+
+		    });
 });
 
 

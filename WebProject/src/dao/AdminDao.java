@@ -14,6 +14,7 @@ import java.util.Map.Entry;
 import java.util.UUID;
 
 import org.json.simple.parser.JSONParser;
+import org.objectweb.asm.tree.TryCatchBlockNode;
 
 import com.fasterxml.jackson.core.JsonGenerationException;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -169,5 +170,67 @@ public class AdminDao {
 		}
         
     }
+	
+	public boolean deleteAmenity( String id ,String path) {
+		
+		UUID uuid = UUID.fromString(id.trim());
+		System.out.println(  UUID.fromString(id.trim()) );
+		
+		if(amenities.containsKey(  uuid )) {
+			
+			amenities.get(uuid).setDeleted(false);
+		
+		////
+		
+		
+		
+		  ObjectMapper mapper = new ObjectMapper();
+	        //Converting the Object to JSONString
+	        String jsonString = "";
+	       
+
+	        
+			System.out.println(jsonString);
+			
+			BufferedWriter bw = null;
+			try {
+				File apartmantFile =  new File(path+"/amenity.json");
+				FileWriter fileWriter = new FileWriter(apartmantFile,true);  
+				
+				bw = new BufferedWriter(fileWriter);
+				
+				
+				
+				for (Amenity amenity : amenities.values()) {
+					
+					jsonString = mapper.writeValueAsString(amenity);
+					bw.write(jsonString);
+					bw.newLine();
+					
+				}
+
+			}catch (IOException e) {
+				System.out.println("An error occurred.");
+				e.printStackTrace();
+				return false;
+			}finally{		    	
+			   try{
+			      if(bw!=null) {
+			    	  bw.flush();
+			    	  bw.close();
+			      }
+			   }catch(Exception ex){
+			       System.out.println("Error in closing the BufferedWriter"+ex);
+			    }
+			}
+		
+		///		
+			
+		}else {
+			return false;
+		}
+		
+		return true;
+	}
 
 }
