@@ -67,8 +67,8 @@ public class ApartmentService {
 		// Ovaj objekat se instancira vise puta u toku rada aplikacije
 		// Inicijalizacija treba da se obavi samo jednom
 		if (ctx.getAttribute("aptDao") == null) {
-			
-			ctx.setAttribute("aptDao", new ApartmentDao());
+			String contextPath = ctx.getRealPath("/");
+			ctx.setAttribute("aptDao", new ApartmentDao(contextPath));
 		}else if(ctx.getAttribute("adminDao") == null) {
 			
 			ctx.setAttribute("adminDao", new AdminDao());
@@ -186,7 +186,10 @@ public class ApartmentService {
 			
 			newApartment.setPathToImgs(paths);;
  			
-			apartmentDao.save(newApartment, contextPath);
+			
+			apartmentDao.getApartments().put(newApartment.getId().toString().trim(), newApartment);
+			apartmentDao.saveData();
+			apartmentDao.loadData();
 			
 			
 			return Response.status(200).entity(apartmentDto).build();

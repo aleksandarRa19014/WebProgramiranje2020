@@ -159,7 +159,7 @@ $(document).ready(function() {
 						 console.log(amenites);
 				  });
 				  
-				  
+				  console.log(amenites);
 				  
 				  adrs = new Address($("#address").val(), $("#place").val(), $("#zipCode").val());
 				  
