@@ -119,24 +119,25 @@ public class ApartmentDao {
 	        File file = null;
 	        try {
 	            file = new File(loadPath);
-	            in = new BufferedReader(new FileReader(file));
-
-	            ObjectMapper objectMapper = new ObjectMapper();
-	            objectMapper.setVisibility(
-	                    VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
-	            TypeFactory factory = TypeFactory.defaultInstance();
-	            MapType type = factory.constructMapType(HashMap.class, String.class, Apartment.class);
-
-	            objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
-	            objectMapper.registerModule(new JavaTimeModule());
-	            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
-	            System.out.println((Map<String, Apartment>) objectMapper.readValue(file, type));
-	            this.apartments = (Map<String, Apartment>) objectMapper.readValue(file, type);
-	            
-	            for(Apartment apt : this.apartments.values()) {
-	            	System.out.println("-----------------------------------------------------"+apt.getNameApartment());
+	            if(file.exists()) {
+		            in = new BufferedReader(new FileReader(file));
+	
+		            ObjectMapper objectMapper = new ObjectMapper();
+		            objectMapper.setVisibility(
+		                    VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+		            TypeFactory factory = TypeFactory.defaultInstance();
+		            MapType type = factory.constructMapType(HashMap.class, String.class, Apartment.class);
+	
+		            objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+		            objectMapper.registerModule(new JavaTimeModule());
+		            objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+		            System.out.println((Map<String, Apartment>) objectMapper.readValue(file, type));
+		            this.apartments = (Map<String, Apartment>) objectMapper.readValue(file, type);
+		            
+		            for(Apartment apt : this.apartments.values()) {
+		            	System.out.println("-----------------------------------------------------"+apt.getNameApartment());
+		            }
 	            }
-	            
 	        } catch (Exception e) {
 	            e.printStackTrace();
 	        } finally {

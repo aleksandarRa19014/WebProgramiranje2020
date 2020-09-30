@@ -72,8 +72,8 @@ public class ApartmentService {
 			String contextPath = ctx.getRealPath("/");
 			ctx.setAttribute("aptDao", new ApartmentDao(contextPath));
 		}else if(ctx.getAttribute("adminDao") == null) {
-			
-			ctx.setAttribute("adminDao", new AdminDao());
+			String contextPath = ctx.getRealPath("/");
+			ctx.setAttribute("adminDao", new AdminDao(contextPath));
 		}
 	}
 	
@@ -100,7 +100,6 @@ public class ApartmentService {
 			String contextPath = ctx.getRealPath("/");
 
 			System.out.println(contextPath);
-			
 			
 			Apartment newApartment = new Apartment();
 			
@@ -180,9 +179,8 @@ public class ApartmentService {
 			
 			
 			
-			adminDao.readAmenity(contextPath);
+			adminDao.loadData();
 			
-			System.out.println(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
 			newApartment.setAmenites(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
 			
 			

@@ -1,8 +1,7 @@
 package services;
 
 import java.util.Collection;
-import java.util.Map;
-import java.util.UUID;
+
 
 import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
@@ -19,10 +18,13 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
 import beans.Amenity;
+import beans.Apartment;
 import beans.Role;
 import beans.User;
 import dao.AdminDao;
+import dao.ApartmentDao;
 import dao.UserDao;
+
 
 @Path("/AdminService")
 public class AdminService {
@@ -44,8 +46,11 @@ public class AdminService {
 			ctx.setAttribute("userDao", new UserDao());
 			
 		}else if(ctx.getAttribute("adminDao") == null) {
-			
-			ctx.setAttribute("adminDao", new AdminDao());
+			String contextPath = ctx.getRealPath("/");
+			ctx.setAttribute("adminDao", new AdminDao(contextPath));
+		}else if(ctx.getAttribute("aptDao") == null) {
+			String contextPath = ctx.getRealPath("/");
+			ctx.setAttribute("aptDao", new ApartmentDao(contextPath));
 		}
 	}
 
@@ -70,13 +75,12 @@ public class AdminService {
 		
 		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
 		
-		String contextPath = ctx.getRealPath("/");
+		adminDao.getAmenities().put(newAmennity.getId().toString().trim(), newAmennity);
 		
-			
-		if(adminDao.saveAmenity(newAmennity,contextPath)) {
-			
-			adminDao.readAmenity(contextPath);
-			return Response.status(200).entity(amenity).build();
+		adminDao.saveData();
+		
+		if(adminDao.getAmenities().containsKey(newAmennity.getId().toString().trim())) {
+			return Response.status(200).entity(adminDao.getAmenities().get(newAmennity.getId().toString().trim())).build();
 		}else {
 			return Response.status(400).entity("Bad Request").build();
 		}	
@@ -88,9 +92,9 @@ public class AdminService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Collection<Amenity> getAmenities() {
 		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
-		String contextPath = ctx.getRealPath("/");
-		adminDao.readAmenity(contextPath);
-		return adminDao.getAllAmenities();
+		
+		adminDao.loadData();
+		return adminDao.getAmenities().values();
 	}	
 	
 	
@@ -108,14 +112,39 @@ public class AdminService {
 		
 		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
 		
-		String contextPath = ctx.getRealPath("/");
+		Amenity amenity = adminDao.fundById(id.trim());
 		
-		if(adminDao.deleteAmenity(id, contextPath)) {
-			return Response.status(200).build();
+		if(amenity != null) {
+			
+			adminDao.getAmenities().remove(amenity); //izbacim iz liste postavim deleted na true i opet ubacim u listu i sacuvam tako
+			
+			ApartmentDao aptDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+			
+			aptDao.loadData();
+			
+			if(aptDao.getApartments() != null) {
+				for (Apartment apt : aptDao.getApartments().values()) {
+					for (Amenity amen : apt.getAmenites()) { // izbacim iz svih apartmana obrisan sadrzaj apartmana
+						if (amen.getId().toString().trim().equals(id.trim())) {
+							apt.getAmenites().remove(amen);
+						}
+					}
+				}
+				aptDao.saveData();
+			}
+			
+			amenity.setDeleted(true);
+			
+			adminDao.getAmenities().put(amenity.getId().toString().trim(), amenity);
+			
+			adminDao.saveData();
+			
+			
+			return Response.status(200).entity("Uspesno ste obrisali").build();
+			
 		}else {
-			return Response.status(400).entity("Bad Request").build();
-		}
-	
+			return Response.status(400).entity("Sadrzaj aprtmana ne postoji").build();
+		}	
 	}
 	
 	

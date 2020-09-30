@@ -16,10 +16,17 @@ import java.util.UUID;
 import org.json.simple.parser.JSONParser;
 import org.objectweb.asm.tree.TryCatchBlockNode;
 
+import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.core.JsonGenerationException;
+import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
+import com.fasterxml.jackson.databind.type.MapType;
+import com.fasterxml.jackson.databind.type.TypeFactory;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 
 import beans.Amenity;
 import beans.Apartment;
@@ -29,208 +36,120 @@ import beans.Apartment;
 
 public class AdminDao {
 
-	private Map<UUID, Amenity> amenities = new HashMap<>();
-	private Map<UUID, Apartment> apertments = new HashMap<>();
+	private Map<String, Amenity> amenities = new HashMap<>();
+	private Map<String, Apartment> apartments = new HashMap<>();
+	private String contextPath;
 	
-	public AdminDao() {
-		super();
-		// TODO Auto-generated constructor stub
+	
+	public AdminDao(String contextPath) {
+		 this.contextPath = contextPath;
 	}
 	
+	public Map<String, Amenity> getAmenities() {
+		return amenities;
+	}
+
+	public void setAmenities(Map<String, Amenity> amenities) {
+		this.amenities = amenities;
+	}
+
+	public Map<String, Apartment> getApartments() {
+		return apartments;
+	}
+
+	public void setApartments(Map<String, Apartment> apartments) {
+		this.apartments = apartments;
+	}	
 	
-	public ArrayList<Amenity> getAmenitiesWithIds(Collection<String> idsAmenties) {
+	public Amenity fundById(String id) {
+		if(this.amenities.containsKey(id)) {
+			return this.amenities.get(id);
+		}
+		return null;
+	}
+	
+	public  ArrayList<Amenity> getAmenitiesWithIds(Collection<String> idsAmenties) {
+		ArrayList<Amenity> amentWithID = new ArrayList<Amenity>();
 		
-		
-		ArrayList<Amenity> list=new ArrayList<Amenity>();
-		
-		System.out.println("----------------  getAmenitiesWithIds" + idsAmenties);
-		
-		
-		UUID uuid = null;
-		for(String id : idsAmenties) {
+		for (String id :idsAmenties) {
 			
-			
-			System.out.println("111111111111============" + id);
-			
-			uuid = UUID.fromString(id.trim());
-			System.out.println(  UUID.fromString(id.trim()) );
-			
-			if(amenities.containsKey(  uuid )) {
-				
-				list.add( amenities.get( uuid ));
-				
-				System.out.println("----------- " + amenities.get( uuid ).getName());
+			if(this.amenities.containsKey(id.trim())) {
+				amentWithID.add(this.amenities.get(id.trim()));
 			}
 		}
 		
-		System.out.println("----------------  getAmenitiesWithIds");
-		
-		return list;	
+		return amentWithID;
 	}
 	
-	
-	public Collection<Amenity> getAllAmenities(){
-		Collection<Amenity> allAmenities = null;
-		
-		allAmenities = amenities.values();
-		
-		return  allAmenities;
-	}
-	
-	
-	public boolean saveAmenity(Amenity amenity, String path) {
-		
-		  ObjectMapper mapper = new ObjectMapper();
-	        //Converting the Object to JSONString
-	        String jsonString = "";
-	       
+	@SuppressWarnings("deprecation")
+	public void saveData() {
 
-	        
-			try {
-				jsonString = mapper.writeValueAsString(amenity);
-				
-				System.out.println(jsonString);
-				
-				BufferedWriter bw = null;
+		System.out.println("saving data");
+
+		FileWriter fileWriter = null;
+		File file = null;
+		try {
+			file = new File(this.contextPath + "\\amenities.json");
+			file.createNewFile();
+			fileWriter = new FileWriter(file);
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+			objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+			String string = objectMapper.writeValueAsString(this.amenities);
+			fileWriter.write(string);
+		} catch (IOException eeee) {
+			eeee.printStackTrace();
+		} finally {
+			if (fileWriter != null) {
 				try {
-					File apartmantFile =  new File(path+"/amenity.json");
-					FileWriter fileWriter = new FileWriter(apartmantFile,true);  
-					
-					bw = new BufferedWriter(fileWriter);
-					
-					bw.write(jsonString);
-					bw.newLine();
-				}catch (IOException e) {
-		    		System.out.println("An error occurred.");
-		    		e.printStackTrace();
-		    		return false;
-			    }finally{		    	
-				   try{
-				      if(bw!=null) {
-				    	  bw.flush();
-				    	  bw.close();
-				      }
-				   }catch(Exception ex){
-				       System.out.println("Error in closing the BufferedWriter"+ex);
-				    }
+					fileWriter.close();
+				} catch (Exception ee) {
+					ee.printStackTrace();
 				}
-				
-				
-				
-			} catch (JsonProcessingException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-				return false;
 			}
-		      
-		
-		
-		return true;
+		}
 	}
 	
 	
-	public void readAmenity(String path) {
+	 @SuppressWarnings({ "unchecked", "deprecation" })
+	public void loadData() {
 
-        BufferedReader br = null;
-       
+	        System.out.println("loading data");
 
-        try {
-
-            String sCurrentLine;
-            File file = new File(path+"/amenity.json");
-            if(file.exists()) {
-	            FileReader fReader = new FileReader(file);
-           
-            
-	            br = new BufferedReader(fReader);
-	         
+	        String loadPath = this.contextPath + "\\amenities.json";
+	        BufferedReader in = null;
+	        File file = null;
+	        try {
+	            file = new File(loadPath);
+	            if(file.exists()) {
+		            in = new BufferedReader(new FileReader(file));
 	
-	            while ((sCurrentLine = br.readLine()) != null) {
-	            	ObjectMapper mapper = new ObjectMapper(); 
-	            	Amenity cricketer = mapper.readValue(sCurrentLine, Amenity.class); 
-	            	amenities.put(cricketer.getId(),cricketer);
+		            ObjectMapper objectMapper = new ObjectMapper();
+		            objectMapper.setVisibility(
+		                    VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
+		            TypeFactory factory = TypeFactory.defaultInstance();
+		            MapType type = factory.constructMapType(HashMap.class, String.class, Amenity.class);
+	
+		            objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
+		          
+		            this.amenities = (Map<String, Amenity>) objectMapper.readValue(file, type);
+		            
+		            for(Amenity amn : this.amenities.values()) {
+		            	System.out.println("-----------------------------------------------------"+amn.getName());
+		            }
 	            }
-            }else {
-            	return;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null)br.close();
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-        }
-        
-        
-        for (Entry<UUID, Amenity>  amanity : amenities.entrySet()) {
-        	System.out.println("Key = " + amanity.getKey() +  
-                    ", Value = " + amanity.getValue().getName()); 
-		}
-        
-    }
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	        } finally {
+	            if (in != null) {
+	                try {
+	                    in.close();
+	                } catch (Exception e) {
+	                    e.printStackTrace();
+	                }
+	            }
+	        }
+	    }
 	
-	public boolean deleteAmenity( String id ,String path) {
-		
-		UUID uuid = UUID.fromString(id.trim());
-		System.out.println(  UUID.fromString(id.trim()) );
-		
-		if(amenities.containsKey(  uuid )) {
-			
-			amenities.get(uuid).setDeleted(false);
-		
-		////
-		
-		
-		
-		  ObjectMapper mapper = new ObjectMapper();
-	        //Converting the Object to JSONString
-	        String jsonString = "";
-	       
-
-	        
-			System.out.println(jsonString);
-			
-			BufferedWriter bw = null;
-			try {
-				File apartmantFile =  new File(path+"/amenity.json");
-				FileWriter fileWriter = new FileWriter(apartmantFile,true);  
-				
-				bw = new BufferedWriter(fileWriter);
-				
-				
-				
-				for (Amenity amenity : amenities.values()) {
-					
-					jsonString = mapper.writeValueAsString(amenity);
-					bw.write(jsonString);
-					bw.newLine();
-					
-				}
-
-			}catch (IOException e) {
-				System.out.println("An error occurred.");
-				e.printStackTrace();
-				return false;
-			}finally{		    	
-			   try{
-			      if(bw!=null) {
-			    	  bw.flush();
-			    	  bw.close();
-			      }
-			   }catch(Exception ex){
-			       System.out.println("Error in closing the BufferedWriter"+ex);
-			    }
-			}
-		
-		///		
-			
-		}else {
-			return false;
-		}
-		
-		return true;
-	}
 
 }

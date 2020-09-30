@@ -217,10 +217,6 @@ $(document).ready(function() {
 
 		        var name = $(this).parents("tr").attr('data-name');
 
-		        
-
-		    
-
 		        $(this).parents("tr").find("td:eq(0)").text(name);
 
 		   
@@ -252,6 +248,22 @@ $(document).ready(function() {
 		    });
 	
 		    $("body").on("click", ".btn-delete", function(){
+		    	
+		    	var idAmn = $(this).parents("tr").attr('id');
+		    	console.log(idAmn);
+		    	
+		    	 $.ajax({
+                     url: '/WebProject/rest/AdminService?id=' + idAmn,
+                     type: 'DELETE',
+                     contentType: 'application/json',
+                    
+                 }).done(function( data, textStatus, jqXHR) {
+                	 alert(data.responseText);
+				}).fail(function( data, textStatus, jqXHR) {
+					
+					alert(data.responseText);
+					
+				});
 
 		        $(this).parents("tr").remove();
 
