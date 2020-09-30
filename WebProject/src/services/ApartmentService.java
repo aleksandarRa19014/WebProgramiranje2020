@@ -18,6 +18,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
+import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
@@ -45,6 +46,7 @@ import beans.User;
 import dao.AdminDao;
 import dao.ApartmentDao;
 import dto.ApartmentDto;
+
 
 @Path("/apartmentService")
 public class ApartmentService {
@@ -192,9 +194,44 @@ public class ApartmentService {
 			apartmentDao.loadData();
 			
 			
-			return Response.status(200).entity(apartmentDto).build();
-		
-			
+			return Response.status(200).entity(apartmentDto).build();		
 	}
+	
+	
+	@GET
+	@Path("/allApts")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response allApts(@Context HttpServletRequest request) {
+		try {
+			User loggedIn = (User) request.getSession().getAttribute("user");
+			if (loggedIn == null) {
+				System.out.println("non logged user requesting apts..");
+				return Response.status(200).entity(((ApartmentDao) ctx.getAttribute("aptDao")).getActiveApartments())
+						.build();
+			} else {
+				if (loggedIn.getRole().equals(Role.guest))
+					return Response.status(200)
+							.entity(((ApartmentDao) ctx.getAttribute("aptDao")).getActiveApartments()).build();
+				else if (loggedIn.getRole().equals(Role.host)) {
+					return Response.status(200).entity(
+							((ApartmentDao) ctx.getAttribute("aptDao")).getApartmentsByHost(loggedIn.getUserName()))
+							.build();
+				} else if (loggedIn.getRole().equals(Role.admin)) {
+					List<Apartment> allApts = new ArrayList<Apartment>(
+							((ApartmentDao) ctx.getAttribute("aptDao")).getApartments().values());
+					return Response.status(200).entity(allApts).build();
+				}
+			}
+
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+			
+			return Response.status(400).entity("Error occured").build();
+		}
+		return Response.status(400).entity("Idk").build();
+
+	}
+	
+	
 	
 }

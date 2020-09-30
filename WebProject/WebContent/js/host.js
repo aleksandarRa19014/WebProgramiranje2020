@@ -82,7 +82,7 @@ $(document).ready(function() {
 		
 		function goTo(){
 			
-			window.location = "http://localhost:8090/WebProject/";
+			window.location = "/WebProject/";
 		}
 	
 

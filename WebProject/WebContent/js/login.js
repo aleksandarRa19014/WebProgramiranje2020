@@ -49,9 +49,9 @@ $(document).ready(function() {
 	function goTo(role){
 		
 		if(role == "admin"){
-			window.location = "http://localhost:8090/WebProject/adminPage.html";
+			window.location = "adminPage.html";
 		}else if(role == "host"){
-			window.location = "http://localhost:8090/WebProject/hostPage.html";
+			window.location = "hostPage.html";
 		}else if(role == ""){
 			//window.location = "http://localhost:8090/WebProject/";
 		}	

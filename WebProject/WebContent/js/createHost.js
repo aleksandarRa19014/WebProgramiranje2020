@@ -83,7 +83,7 @@ $(document).ready(function() {
 	});	
 	
 	function goTo(){
-		window.location = "http://localhost:8090/WebProject/adminPage.html";	
+		window.location = "adminPage.html";	
 	}
 	
 });
