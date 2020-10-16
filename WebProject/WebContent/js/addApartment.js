@@ -154,6 +154,12 @@ $(document).ready(function() {
 				  
 				  console.log("-------------------"+ $("#checkin").val());
 				  
+				  
+				  while (amenites.length > 0) {
+					  amenites.pop();
+				  } //
+				  
+				  
 				  $("input:checked").each(function(){
 						 amenites.push(this.id);
 						 console.log(amenites);
@@ -194,6 +200,7 @@ $(document).ready(function() {
 				  }).done(function( data, textStatus, jqXHR) {
 					   
 					  console.log(data);
+					  goTo();
 						
 					}).fail(function( data, textStatus, jqXHR) {
 						alert(data.responseText);
@@ -202,6 +209,11 @@ $(document).ready(function() {
 			  }
 	
 	});	
+	
+	function goTo(){
+		
+		window.location = "/WebProject/hostPage.html";
+	}
 	
 	  
 	
@@ -222,6 +234,7 @@ $(document).ready(function() {
                      var img = $('<img />').attr('src', e.target.result).appendTo('#imgContainer');
                     
                      images.push(e.target.result);
+                     
                      
                 }
                 

@@ -47,7 +47,7 @@ $(document).ready(function() {
 				    
 				});
 		});
-		
+			
 		
 		$("#createAmanity").click(function(e) {
 		  		console.log("sasasa");	
@@ -95,8 +95,14 @@ $(document).ready(function() {
 		    console.log($(this).data('rel'));
 		    
 		    $('#' + $(this).data('rel')).parentsUntil("div#cont").show();		//pokazi sve od njega na gore   
-		    $('#' + $(this).data('rel')).siblings().show();						//svu njegovu bracu					
+		    $('#' + $(this).data('rel')).siblings().show();						//njegovu bracu		
+		    $('#' + $(this).data('rel')).siblings().find("*").show();	
+		    $('#' + $(this).data('rel')).children().show();                     //njegovu decu
+		    $('#' + $(this).data('rel')).children().find("*").show(); 
+		    $('#' + $(this).data('rel')).find("*").show();
 		    $('#' + $(this).data('rel')).show();								//i na kaju pokazi njega
+		    
+	
 		});
 		
 		
@@ -187,7 +193,7 @@ $(document).ready(function() {
 		
 		function goTo(){
 			
-			window.location = "/WebProject/";
+			window.location = "/WebProject/index.html";
 		}
 		
 		

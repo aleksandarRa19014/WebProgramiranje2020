@@ -140,10 +140,7 @@ public class ApartmentService {
 		
 			
 
-			
-			String dat =  DateTimeFormatter.ofPattern("yyyyMMddHHmmss").format(LocalDateTime.now());
-			
-			System.out.println(dat);
+	
 			 
 			 int i =0;
 			for(String s: apartmentDto.getImages()) {
@@ -159,7 +156,7 @@ public class ApartmentService {
 				
 				try {
 						
-						String path = contextPath +"/" + apartmentDto.getHost().getUserName().replaceAll(" ","") + i + "-" +  dat +".jpg";
+						String path = contextPath + newApartment.getId() + "-"+ i +".jpg";
 						osf = new FileOutputStream(new File(path));
 						
 						paths.add(path);
@@ -184,7 +181,7 @@ public class ApartmentService {
 			newApartment.setAmenites(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
 			
 			
-			newApartment.setPathToImgs(paths);;
+			newApartment.setPathToImgs(apartmentDto.getImages());
  			
 			
 			apartmentDao.getApartments().put(newApartment.getId().toString().trim(), newApartment);
@@ -202,21 +199,26 @@ public class ApartmentService {
 	public Response allApts(@Context HttpServletRequest request) {
 		try {
 			User loggedIn = (User) request.getSession().getAttribute("user");
+			
+			ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+			
+			apartmentDao.loadData();
+			
 			if (loggedIn == null) {
 				System.out.println("non logged user requesting apts..");
-				return Response.status(200).entity(((ApartmentDao) ctx.getAttribute("aptDao")).getActiveApartments())
+				return Response.status(200).entity(apartmentDao.getActiveApartments())
 						.build();
 			} else {
 				if (loggedIn.getRole().equals(Role.guest))
 					return Response.status(200)
-							.entity(((ApartmentDao) ctx.getAttribute("aptDao")).getActiveApartments()).build();
+							.entity(apartmentDao.getActiveApartments()).build();
 				else if (loggedIn.getRole().equals(Role.host)) {
 					return Response.status(200).entity(
-							((ApartmentDao) ctx.getAttribute("aptDao")).getApartmentsByHost(loggedIn.getUserName()))
+							apartmentDao.getApartmentsByHost(loggedIn.getUserName()))
 							.build();
 				} else if (loggedIn.getRole().equals(Role.admin)) {
 					List<Apartment> allApts = new ArrayList<Apartment>(
-							((ApartmentDao) ctx.getAttribute("aptDao")).getApartments().values());
+							apartmentDao.getApartments().values());
 					return Response.status(200).entity(allApts).build();
 				}
 			}
