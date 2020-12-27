@@ -50,7 +50,6 @@ $(document).ready(function() {
 			
 		
 		$("#createAmanity").click(function(e) {
-		  		console.log("sasasa");	
 		  		
 		  		
 		  		

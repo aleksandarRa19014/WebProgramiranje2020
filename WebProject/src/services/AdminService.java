@@ -24,6 +24,8 @@ import beans.User;
 import dao.AdminDao;
 import dao.ApartmentDao;
 import dao.UserDao;
+import java.util.Iterator;
+
 
 
 @Path("/AdminService")
@@ -110,28 +112,43 @@ public class AdminService {
 			return Response.status(403).entity("Forbidden").build();
 		}
 		
+		System.out.println("id================= " + id);
+		
 		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
 		
 		Amenity amenity = adminDao.fundById(id.trim());
 		
 		if(amenity != null) {
 			
-			adminDao.getAmenities().remove(amenity); //izbacim iz liste postavim deleted na true i opet ubacim u listu i sacuvam tako
 			
-			ApartmentDao aptDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
-			
-			aptDao.loadData();
-			
-			if(aptDao.getApartments() != null) {
-				for (Apartment apt : aptDao.getApartments().values()) {
-					for (Amenity amen : apt.getAmenites()) { // izbacim iz svih apartmana obrisan sadrzaj apartmana
-						if (amen.getId().toString().trim().equals(id.trim())) {
-							apt.getAmenites().remove(amen);
+			if(adminDao.getAmenities() != null) {
+				
+				adminDao.getAmenities().remove(amenity); //izbacim iz liste postavim deleted na true i opet ubacim u listu i sacuvam tako
+				
+				ApartmentDao aptDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+				
+				aptDao.loadData();
+				
+				if(aptDao.getApartments() != null) {
+					
+
+					for (Apartment apt : aptDao.getApartments().values()) {
+						
+						if(apt.getAmenites() != null) {	
+							for (Amenity amen : apt.getAmenites()) { // izbacim iz svih apartmana obrisan sadrzaj apartmana
+								if (amen.getId().toString().trim().equals(id.trim())) {
+									apt.getAmenites().remove(amen);
+									amen.setDeleted(true);
+									apt.getAmenites().add(amen);
+								}
+							}
 						}
 					}
+					aptDao.saveData();
 				}
-				aptDao.saveData();
+				
 			}
+			
 			
 			amenity.setDeleted(true);
 			

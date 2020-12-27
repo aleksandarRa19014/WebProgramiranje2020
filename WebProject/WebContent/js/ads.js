@@ -5,6 +5,8 @@ $(document).ready(function() {
 	
 	var images = []; 
 	
+	var ads = [];
+	
 	$.ajax({
 	  	url: "/WebProject/rest/userService/currentUser",
 		type: "GET",
@@ -24,6 +26,7 @@ $(document).ready(function() {
 	});
 	
 	
+	
 	$("#getApartments").one( "click", function() {
 
 		$.ajax({
@@ -40,7 +43,11 @@ $(document).ready(function() {
 		  		
 			});
 			
+			ads = data;
+			
 			generatePage(role, data);
+			
+			
 		
 		}).fail(function( data, textStatus, jqXHR) {
 			
@@ -51,41 +58,67 @@ $(document).ready(function() {
 
 	function generatePage(role,ads){
 		if(role == "admin"){
+		
 			
 			$.each(ads,function(i,apart){
 				
 						$("#apartments").append(
-						"<div class='col-xs-12 col-sm-6 col-md-3 col-lg-3 apartment_box' id = 'crtApartments' data-apartment_price=' "+apart.price + " '  data-person_number='' data-room_number=' '>"
-							+"<div class='thumbnail-box' >"
-							+		"<div class='col-xs-5 col-sm-5 col-md-12 col-lg-12 no-padding-right no-padding-left'>"
-							+				   "<a class='' href=''>"
-							+                   "<img class='img-responsive' src='"+apart.pathToImgs[0] + "' > </a>"
-							+		"</div>"
-							+	  	"<div  class='col-xs-7 col-sm-7 col-md-12 col-lg-12 no-padding-right no-padding-left caption'>"
-							+		    "<a href='https://noviapartmani.com/apartmani-beograd/strogi-centar/apartman-kolarac'>"
-							+				"<div class='col-xs-7 col-sm-7 col-md-8 col-lg-9 no-padding-left no-padding-right'>"
-							+					"<h3 class='apartment-name'>apartman Kolarac</h3>"
-							+				"</div>"
-							+			"</a>"
-							+			"<div class='col-xs-5 col-sm-5'>"
-							+				"<span class='apartment-price'> "+apart.price + " </span>"
-							+			"</div>"
-							+         "</div>"
-							+  "</div>"
-							+	"<ul class='clear-both apartment-details-list'>"
-							+		"<li> <span>" + apart.nameApartment + "</span></li>"
-							+		"<li><span>" + apart.typeApart + "</span></li>"
-							+		"<li><span>" + apart.numRoom + "</li>"
-							+		"<li><span>" + apart.numOfGuests + "</li>"		
-							+		"<li><span>" + apart.location.address.street + "</span></li>"
-							+	"</ul>"
-					    	+ "</div>");
-		  		
+								    "<div class='card mb-3' >"
+								    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+								    +		"<div class='card-body'>"
+								    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
+								    +			"<span class='apartment-price'> "+apart.price + " </span>"
+								    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
+									+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
+									+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
+									+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
+									+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
+									+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
+									+			"</ul>"
+								    +       	"<a href='' class='btn btn-primary'>Go somewhere</a>"
+								    +       	"<a href='' class='btn btn-primary'>Go somewhere</a>"
+								    +       "</div>"
+								    +"</div>"	
+					    );
+						
+						
 			});
 			
+			$('.card').show();
+			$('.card-body').show();
 			
 			$("#apartments").append("<br>");
 		}else if(role == "host"){
+			
+			$.each(ads,function(i,apart){
+				
+				$("#apartments").append(
+						    "<div class='card mb-3' >"
+						    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+						    +		"<div class='card-body'>"
+						    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
+						    +			"<span class='apartment-price'> "+apart.price + " </span>"
+						    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
+							+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
+							+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
+							+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
+							+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
+							+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
+							+			"</ul>"
+						    +       	"<a href='' class='btn btn-primary'>Go somewhere</a>"
+						    +       	"<a href='' class='btn btn-primary'>Go somewhere</a>"
+						    +       "</div>"
+						    +"</div>"	
+			    );
+						
+						
+			});
+			
+			$('.card').show();
+			$('.card-body').show();
+			
+			$("#apartments").append("<br>");
+			
 			console.log(role);
 		}else if(role == "guest"){
 			console.log(role);
@@ -97,4 +130,44 @@ $(document).ready(function() {
 	}
 	
 	
+	function sortByPriceAsc(a, b) {
+	    var aPrice = a.price;
+	    var bPrice = b.price;
+	    return ((aPrice < bPrice) ? -1 : ((aPrice > bPrice) ? 1 : 0));
+	}
+
+	function sortByPriceDesc(a, b) {
+	    var aPrice = a.price;
+	    var bPrice = b.price;
+	    return ((aPrice > bPrice) ? -1 : ((aPrice < bPrice) ? 1 : 0));
+	}
+	
+	
+	
+	$( "#sortPrce" ).change(function() {
+		  
+		  console.log($( "#sortPrce option:selected" ).text());
+		  if ($( "#sortPrce option:selected" ).val() == 'asc')
+		  {
+			  ads.sort(sortByPriceAsc);
+			  
+			  $('.card').empty();
+			  
+			  generatePage(role, ads);
+		  }else if($( "#sortPrce option:selected" ).val() == 'desc'){
+			  
+			  ads.sort(sortByPriceDesc);
+			  
+			  $('.card').empty();
+			  
+			  generatePage(role, ads);
+		  }
+		  
+		});
+	
+	
+	
+	
 });
+
+

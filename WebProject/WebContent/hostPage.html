@@ -20,35 +20,15 @@
 		                    <div class="navbar-collapse collapse" id="mobile_menu">
 		                       
 		                        <ul class="nav navbar-nav">
-		                            <li class="active"><a href="#">Home</a></li>
-		                            <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">About Us <span class="caret"></span></a>
-		                                <ul class="dropdown-menu">
-		                                    <li><a href="#">About One</a></li>
-		                                    <li><a href="#">About Two</a></li>
-		                                    <li><a href="#">About Three</a></li>
-		                                    <li><a href="#">About Four</a></li>
-		                                    <li><a href="#">About Five</a></li>
-		                                    <li><a href="#">About Six</a></li>
-		                                </ul>
-		                            </li>
-		                            <li><a  class="link"  href="#" id="getApartments" data-rel="crtApartments">Apartmani</a></li>
-		                            <li><a href="#">Services</a></li>
+		                            
+		                       
+		                            <li class="active"><a  class="link"  href="#" id="getApartments" data-rel="crtApartments">Apartmani</a></li>
+		                            <li><a href="#">Rezervacije</a></li>
 		                            <li><a href="addApartment.html" >Kreiranje apartmana</a></li>
-		                            <li><a class="link" href="#" id="getAllUsers" data-rel="allUsers">Svi korisnici</a></li>
+		                            <li><a class="link" href="#" id="getAllUsers" data-rel="allUsers">Moji korisnici</a></li>
 		                        </ul>
 		                        
-		                        <ul class="nav navbar-nav">
-		                            <li>
-		                                <form action="" class="navbar-form">
-		                                    <div class="form-group">
-		                                        <div class="input-group">
-		                                            <input type="search" name="search" id="" placeholder="Search Anything Here..." class="form-control">
-		                                            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-		                                        </div>
-		                                    </div>
-		                                </form>
-		                            </li>
-		                        </ul>
+		                      
 		
 		                        <ul class="nav navbar-nav navbar-right">
 		                        	  <li><a class="link" href="#" id="curentUser" data-rel="user"></a></li>	
@@ -131,29 +111,75 @@
 				  </div>
 				</div>
 				
+		
 				
 				
-				 <div class="container-fluid">
-				  <h1>Kreiranje apartmana</h1>
 				
-				  <div  class="row">
-					    <div id = "" class="col-sm-6" >
+				<div class="container-fluid">
+				  <h1>Apartmani</h1>	
+				  
+				  
+				  
+				  <div  class="row"  id = 'crtApartments'>
+			
+				
+			            <form class="form-inline" action="/action_page.php" >
+						   <label for="destination">Destinacija:</label>
+						    <input type="text" id="email" placeholder="Mesto, Država" name="dest">
+						   
+						   
+						   <label for="rooms">Broj soba:</label>
+                        <input type="number" id="roomNumber" class="number" name="roomNumber">
+						   
+						   <label for="guests">Broj gostiju:</label>
+                        <input type="number" id="guestNumber" class="number" name="guestNumber">
+                        
+                        
+                        <label for="startDate">Početni datum:</label>
+                        <input  type="date" id="startdate" name="start">
+						   
+						   
+						   <label for="endDate">Krajnji datum:</label>
+                        <input class="form-control" type="date" id="enddate" name="end">
+                        
+
+						    <button type="" class="btn btn-primary" >Pretraži</button>
+  						</form>
+  						
+  						
+		        		
+		        		<div class="col-sm-3" style="background-color:red;"> 
+		        				filter
+		        		</div>
+		        		
+		        		<div class="col-sm-6" id ='apartments'>  
+	
+							
+
+
+		        		</div>
+		        		
+		        		 <div class="col-sm-3" style="background-color:lavender;">
 					    	
-					    			
-						</div>
-					    
-					    <div class="col-sm-3" style="background-color:lavender;">    
-					    					3
-					    </div>	
-					    <div class="col-sm-3" style="background-color:lavenderblush;">
-					    					4
+					    	
+		        		 <div class="col-sm-3" style="background-color:lavender;">
+					    		<select name="sortPrce" id="sortPrce">
+							      <option value="" disabled selected>Sortiraj po ceni: </option>	
+							      <option value="asc">Rastuce</option>
+							      <option value="desc">Opadajuce</option>
+							  </select>
+					    </div>		
+							
 					    </div>
+			      
 				  </div>
 				</div>
 				
 			
 		   
 		  </div>
+		  
+
 				
 	</body>
 </html>
