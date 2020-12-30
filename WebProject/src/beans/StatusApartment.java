@@ -1,5 +1,5 @@
 package beans;
 
 public enum StatusApartment {
-	active,inastive
+	active,inactive
 }

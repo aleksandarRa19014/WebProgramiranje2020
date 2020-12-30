@@ -257,6 +257,7 @@ $(document).ready(function() {
     $('#btnClear').on('click', function() {
     	$("#imgContainer").html('');
     	$("#btnClear").hide();
+    	images = [];
     });
     
     //********************

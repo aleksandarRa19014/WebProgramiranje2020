@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Dodavanje apartmana</title>
+    <title>Izmena apartmana</title>
     <script src="jquery-3.3.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
     
@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" >
    <link rel="stylesheet" type="text/css" href="css/addApartment.css">
    
-   <script src="js/addApartment.js"></script>
+   <script src="js/ads.js"></script>
+   
+   <script src="js/changeApartment.js"></script>
    
    
    <!-- ------------------------------------------- -->
@@ -48,7 +50,7 @@
     <div class="testbox">
     <form id="forma">
 	      <div class="banner">
-	        <h1>Kreiranje apartmana</h1>
+	        <h1>Izmena apartmana</h1>
 	      </div>
 	      
 	      <br/>
@@ -67,8 +69,8 @@
 						  <br/>
 					      <select id="typeApart" name="typeApart">
 						      <option value="" disabled selected></option>
-						      <option value="21">Ceo Apartman</option>
-						       <option value="21">Soba</option>
+						      <option value="apartment">Ceo Apartman</option>
+						      <option value="room">Soba</option>
 						  </select>
 			          </div>
 			 
@@ -124,7 +126,7 @@
 	       
 		           <div class="item">
 		           <label for="lname">Vreme za prijavu<span>*</span></label>
-		             <input type="time" name="checkin" id="checkin"  value="14:00" />
+		             <input type="time" name="checkin" id="checkin"  value="14:00:00" />
 		           </div>
 		          	
 		          <div class="item">
@@ -218,7 +220,7 @@
 		      
 			      
 			      <div class="item" id="imgContainer">
-					<br/>
+					
 			      	
 		         </div>
 		      
@@ -228,7 +230,7 @@
 	      
 	      
 	      <div class="btn-block">
-	      <button type="submit" id="createApartment">Kreiraj apartman</button>
+	      <button type="submit" id="changeApartment">Izmeni apartman</button>
 	      </div>
     </form>
     </div>

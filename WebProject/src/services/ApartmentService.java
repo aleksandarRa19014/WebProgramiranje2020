@@ -3,6 +3,7 @@ package services;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -19,16 +20,21 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.UUID;
 
 import javax.annotation.PostConstruct;
 import javax.imageio.ImageIO;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
@@ -85,11 +91,11 @@ public class ApartmentService {
 	public Response addApartment(@Context HttpServletRequest request, ApartmentDto apartmentDto) throws ParseException, IOException, URISyntaxException {
 			
 			User curentUser = (User) request.getSession().getAttribute("user");
-			if(curentUser != null) {
-				if (curentUser.getRole() == Role.guest ||  curentUser.getRole() == Role.admin) {
-					return Response.status(403).entity("Forbidden").build();
-				}
+			
+			if (curentUser.getRole() == Role.guest ||  curentUser.getRole() == Role.admin || curentUser == null) {
+				return Response.status(403).entity("Forbidden").build();
 			}
+		
 		
 		    Collection<String> paths = new ArrayList<String>(); ;
 		
@@ -135,7 +141,7 @@ public class ApartmentService {
 			newApartment.setPrice(Double.parseDouble(apartmentDto.getPrice()) );
 
 			
-			newApartment.setStatus(StatusApartment.inastive);
+			newApartment.setStatus(StatusApartment.inactive);
 			
 		
 			
@@ -193,6 +199,129 @@ public class ApartmentService {
 	}
 	
 	
+	
+	@POST
+	@Path("/changeApartment")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response changeApartment(@Context HttpServletRequest request, ApartmentDto apartmentDto) throws ParseException, IOException, URISyntaxException {
+			
+			User curentUser = (User) request.getSession().getAttribute("user");
+			
+			if (curentUser.getRole() == Role.guest || curentUser == null) {
+				return Response.status(403).entity("Forbidden").build();
+			}
+		
+		
+		    Collection<String> paths = new ArrayList<String>(); ;
+		
+		    ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+		
+		    AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
+		
+			String contextPath = ctx.getRealPath("/");
+
+			System.out.println(contextPath);
+			
+			Apartment newApartment = new Apartment();
+			
+			newApartment.setId(UUID.fromString(apartmentDto.getId()));
+			
+			
+			newApartment.setLocation(apartmentDto.getLocation());
+			
+			
+			LocalDate startDate = LocalDate.parse(apartmentDto.getStartDate());
+			LocalDate endDate = LocalDate.parse(apartmentDto.getEndDate());
+
+			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
+				newApartment.getDatesForRent().add(date);
+			}
+			
+			
+			
+			newApartment.setHost(apartmentDto.getHost());
+			
+			newApartment.setNameApartment(apartmentDto.getNameApartment());
+			
+			if(apartmentDto.getTypeApart().equals("apartment"))
+			{
+				newApartment.setTypeApart(TypeApartment.apartment); 
+			}else {
+				
+				newApartment.setTypeApart(TypeApartment.room);
+			}
+			newApartment.setNumRoom(Integer.parseInt(apartmentDto.getNumRoom()) );
+			newApartment.setNumOfGuests(Integer.parseInt(apartmentDto.getNumOfGuests()) );
+						
+			newApartment.setHost(apartmentDto.getHost());
+			
+			newApartment.setPrice(Double.parseDouble(apartmentDto.getPrice()) );
+
+			
+			newApartment.setStatus(StatusApartment.inactive);
+			
+		
+			
+
+	
+			 
+			 int i =0;
+			for(String s: apartmentDto.getImages()) {
+				
+				
+				i++;
+				System.out.println(apartmentDto.getImages().size());
+				
+				Base64 decoder = new Base64();
+				byte[] imgBytes = decoder.decode(s);
+				FileOutputStream osf;
+				
+				
+				try {
+						
+						String path = contextPath + newApartment.getId() + "-"+ i +".jpg";
+						osf = new FileOutputStream(new File(path));
+						
+						paths.add(path);
+						
+						osf.write(imgBytes);
+						osf.flush();
+						osf.close();
+					} catch (FileNotFoundException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				
+			}
+			
+			
+			
+			adminDao.loadData();
+			
+			newApartment.setAmenites(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
+			
+			
+			newApartment.setPathToImgs(apartmentDto.getImages());
+ 			
+			
+			System.out.println("-------------------ID" + newApartment.getId().toString());
+			
+			apartmentDao.getApartments().remove(newApartment.getId().toString().trim());
+			
+			apartmentDao.getApartments().put(newApartment.getId().toString().trim(), newApartment);
+			apartmentDao.saveData();
+			apartmentDao.loadData();
+			
+			
+			return Response.status(200).entity(apartmentDto).build();		
+	}
+	
+	
+	
 	@GET
 	@Path("/allApts")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -229,6 +358,56 @@ public class ApartmentService {
 			return Response.status(400).entity("Error occured").build();
 		}
 		return Response.status(400).entity("Idk").build();
+
+	}
+	
+	@GET
+	@Path("/getApart")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getApart(@QueryParam("id") String id, @Context HttpServletRequest request) {
+		
+		User curentUser = (User) request.getSession().getAttribute("user");
+		
+		if (curentUser.getRole() == Role.guest  || curentUser == null) {
+			return Response.status(403).entity("Forbidden").build();
+		}
+		
+		ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+
+		
+		return Response.status(200).entity(apartmentDao.findById(id)).build();
+				
+	}
+	
+	@DELETE
+	public Response deleteApartmant(@QueryParam("id") String id, @Context HttpServletRequest request) {
+		
+		System.out.println(id);
+		
+		try {
+			ApartmentDao aptDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+			Apartment a = aptDao.findById(id.toString());
+			Map<String, Apartment> apts = aptDao.getApartments();
+
+			if (a != null) {
+				
+					a.setDeleted(true);
+					apts.put(id.toString(), a);
+					aptDao.setApartments(apts);
+					aptDao.saveData();
+					ctx.setAttribute("aptDao", aptDao);
+					return Response.status(200).entity("Uspesno ste obrisali apartman").build();
+				
+			}
+
+			else {
+				System.err.println("error occured on delete");
+				return Response.status(400).entity("Apartment not found").build();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return Response.status(500).entity("Internal server error").build();
+		}
 
 	}
 	

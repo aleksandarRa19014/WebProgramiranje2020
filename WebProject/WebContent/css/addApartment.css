@@ -172,7 +172,7 @@
       margin-top: 10px;
       text-align: center;
       }
-      button {
+      button, #btnClear {
       width: 150px;
       padding: 10px;
       border: none;

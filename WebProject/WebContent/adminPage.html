@@ -191,8 +191,22 @@
   						</form>
 
 		        		
-		        		<div class="col-sm-3" style="background-color:red;"> 
-		        				filter
+		        		<div class="col-sm-3" style="background-color:lavender;"> 
+		        				<select name="typAprt" id="filterType">
+							      <option value="" disabled selected>Filtriraj po tipu: </option>	
+							      <option value="room">Soba</option>
+							      <option value="apartment">Ceo Apartman</option>
+							  </select>
+	
+		        		
+		        		</br>
+		        		
+		        		
+		        				<select name="filterStatus" id="filterStatus">
+							      <option value="" disabled selected>Filtriraj po statusu: </option>	
+							      <option value="active">Aktivan</option>
+							      <option value="inactive">Neaktivan</option>
+							  </select>
 		        		</div>
 		        		
 		        		<div class="col-sm-6" id ='apartments'>  

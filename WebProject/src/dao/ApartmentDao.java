@@ -64,6 +64,17 @@ public class ApartmentDao {
 	public Map<String, Amenity> getAmanties() {
 		return amanties;
 	}
+	
+	
+	public Apartment findWithId(String id) {
+		
+		if(apartments.containsKey(id))
+		{
+			return apartments.get(id);
+		}
+		
+		return null;
+	}
 
 
 

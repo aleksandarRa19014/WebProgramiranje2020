@@ -7,6 +7,7 @@ import beans.Location;
 import beans.User;
 
 public class ApartmentDto {
+	private String id;
 	private String nameApartment;
 	private String typeApart;
 	private String numRoom;
@@ -35,6 +36,21 @@ public class ApartmentDto {
 	
 	
 	
+	
+	public String getId() {
+		return id;
+	}
+
+
+
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+
+
+
 	public Location getLocation() {
 		return location;
 	}

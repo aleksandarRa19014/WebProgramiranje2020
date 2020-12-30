@@ -30,12 +30,17 @@ public class Apartment {
 	private StatusApartment status;
 	private Collection<Amenity> amenites;
 	
+	private Boolean deleted;
+	
 	@JsonBackReference
 	private Collection<Reservation> reservations;
+	
+	
 	
 	public Apartment() {
 		super();
 		this.id = UUID.randomUUID();
+		this.deleted = false;
 		// TODO Auto-generated constructor stub
 	}
 
@@ -43,7 +48,7 @@ public class Apartment {
 			Location location, List<LocalDate> datesForRent, List<LocalDate> datesAvailable, User host,
 			Collection<Comment> comments, Collection<String> pathToImgs, double price, LocalTime checkInTime,
 			LocalTime chackOutTime, StatusApartment status, Collection<Amenity> amenites,
-			Collection<Reservation> reservations) {
+			Collection<Reservation> reservations, Boolean deleted) {
 		super();
 		this.id = id;
 		this.nameApartment = nameApartment;
@@ -62,6 +67,7 @@ public class Apartment {
 		this.status = status;
 		this.amenites = amenites;
 		this.reservations = reservations;
+		this.deleted = deleted;
 	}
 
 	public UUID getId() {
@@ -199,6 +205,16 @@ public class Apartment {
 	public void setReservations(Collection<Reservation> reservations) {
 		this.reservations = reservations;
 	}
+
+	public Boolean getDeleted() {
+		return deleted;
+	}
+
+	public void setDeleted(Boolean deleted) {
+		this.deleted = deleted;
+	}
+	
+	
     
 	
 
