@@ -57,45 +57,103 @@ $(document).ready(function() {
 	
 
 	function generatePage(role,ads){
-		if(role == "admin"){
 		
-			
-			$.each(ads,function(i,apart){
+		if (ads.length > 0){
+			if(role == "admin"){
 				
-						$("#apartments").append(
-								    "<div class='card mb-3' id='"+ apart.id +" '> "
-								    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
-								    +		"<div class='card-body'>"
-								    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
-								    +			"<span class='apartment-price'> "+apart.price + " </span>"
-								    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
-									+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
-									+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
-									+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
-									+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
-									+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
-									+			"</ul>"
-									+       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
-								    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
-								    +       "</div>"
-								    +"</div>"	
-					    );
-						
-						
-			});
-			
-			$('.card').show();
-			$('.card-body').show();
-			
-			$("#apartments").append("<br>");
-		}else if(role == "host"){
-			
-			$.each(ads,function(i,apart){
 				
-				console.log(apart);
-				
-				if (apart.status == 'active'){
+				$.each(ads,function(i,apart){
 					
+							$("#apartments").append(
+									    "<div class='card mb-3' id='"+ apart.id +" '> "
+									    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+									    +		"<div class='card-body'>"
+									    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
+									    +			"<span class='apartment-price'> "+apart.price + " </span>"
+									    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
+										+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
+										+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
+										+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
+										+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
+										+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
+										+			"</ul>"
+										+       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
+									    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
+									    +       "</div>"
+									    +"</div>"	
+						    );
+							
+							
+				});
+				
+				$('.card').show();
+				$('.card-body').show();
+				
+				$("#apartments").append("<br>");
+			}else if(role == "host"){
+				
+				$.each(ads,function(i,apart){
+					
+					console.log(apart);
+					
+					if (apart.status == 'active'){
+						
+						$("#apartments").append(
+								"<div class='card mb-3' id='"+ apart.id +" '> "
+							    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+							    +		"<div class='card-body'>"
+							    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
+							    +			"<span class='apartment-price'> "+apart.price + " </span>"
+							    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
+								+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
+								+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
+								+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
+								+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
+								+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
+								+			"</ul>"
+								+       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
+							    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
+							    +       "</div>"
+							    +"</div>"	
+						);
+						
+						
+					}else{
+						$("#inactiveApartments").append(
+								"<div class='card mb-3' id='"+ apart.id +" '> "
+							    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+							    +		"<div class='card-body'>"
+							    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
+							    +			"<span class='apartment-price'> "+apart.price + " </span>"
+							    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
+								+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
+								+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
+								+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
+								+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
+								+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
+								+			"</ul>"
+							    +       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
+							    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
+							    +       "</div>"
+							    +"</div>"	
+						);
+						
+						
+					}	
+							
+				});
+				
+				
+				
+				$("#apartments").append("<br>");
+				$("#inactiveApartments").append("<br>");
+				
+				
+				console.log(role);
+			}else if(role == "guest"){
+				console.log(role);
+			}else if(role == "none"){
+				$.each(ads,function(i,apart){
 					$("#apartments").append(
 							"<div class='card mb-3' id='"+ apart.id +" '> "
 						    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
@@ -109,52 +167,18 @@ $(document).ready(function() {
 							+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
 							+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
 							+			"</ul>"
-							+       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
-						    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
+							
 						    +       "</div>"
 						    +"</div>"	
 					);
-					
-					
-				}else{
-					$("#inactiveApartments").append(
-							"<div class='card mb-3' id='"+ apart.id +" '> "
-						    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
-						    +		"<div class='card-body'>"
-						    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
-						    +			"<span class='apartment-price'> "+apart.price + " </span>"
-						    +			"<ul id='aprtspc' class='clear-both apartment-details-list'>"
-							+				"<li class='card-text' > <span>" + apart.nameApartment + "</span></li>"
-							+				"<li class='card-text'><span>" + apart.typeApart + "</span></li>"
-							+				"<li class='card-text'><span>" + apart.numRoom + "</li>"
-							+				"<li class='card-text'><span>" + apart.numOfGuests + "</li>"		
-							+				"<li class='card-text'><span>" + apart.location.address.street + "</span></li>"
-							+			"</ul>"
-						    +       	"<button  class='btn btn-primary btn-edit'>Izmeni podatke</button>"
-						    +       	"<button  class='btn btn-danger btn-delete'>Obrisi apartman</button>"
-						    +       "</div>"
-						    +"</div>"	
-					);
-					
-					
-				}	
-						
-			});
-			
-			
-			
-			$("#apartments").append("<br>");
-			$("#inactiveApartments").append("<br>");
-			
-			
-			console.log(role);
-		}else if(role == "guest"){
-			console.log(role);
-		}else if(role == "none"){
-			console.log(role);
+				
+				});
+				
+				$("#apartments").append("<br>");
+				console.log(role);
+			}
 		}
-		
-		
+	
 	}
 	
 	
@@ -271,6 +295,9 @@ $(document).ready(function() {
 
     });
 	
+	
+	
+
 	
 	
 	

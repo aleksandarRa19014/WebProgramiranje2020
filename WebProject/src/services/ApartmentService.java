@@ -301,6 +301,18 @@ public class ApartmentService {
 			
 			
 			adminDao.loadData();
+
+			
+			if(apartmentDto.getStatus().equals("inactive")) {
+				
+				newApartment.setStatus(StatusApartment.inactive);
+				
+			}else if(apartmentDto.getStatus().equals("active")) {
+				
+				newApartment.setStatus(StatusApartment.active);
+				
+			}
+				
 			
 			newApartment.setAmenites(adminDao.getAmenitiesWithIds(apartmentDto.getAmenites()));
 			
@@ -335,8 +347,7 @@ public class ApartmentService {
 			
 			if (loggedIn == null) {
 				System.out.println("non logged user requesting apts..");
-				return Response.status(200).entity(apartmentDao.getActiveApartments())
-						.build();
+				return Response.status(200).entity(apartmentDao.getActiveApartments()).build();
 			} else {
 				if (loggedIn.getRole().equals(Role.guest))
 					return Response.status(200)

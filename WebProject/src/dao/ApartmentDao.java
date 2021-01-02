@@ -15,6 +15,7 @@ import java.util.Map;
 
 import beans.Amenity;
 import beans.Apartment;
+import beans.StatusApartment;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -88,7 +89,7 @@ public class ApartmentDao {
 	        List<Apartment> activeApts = new ArrayList<>();
 
 	        for (Apartment a : apartments.values()) {
-	            if (a.getStatus().equals("active"))
+	            if (a.getStatus() == StatusApartment.active)
 	                activeApts.add(a);
 	        }
 

@@ -56,6 +56,8 @@ $(document).ready(function() {
 		    
 		    $("#typeApart").val(data.typeApart.trim()).change();
 		    
+		    $("#statusApart").val(data.status.trim()).change();
+		    
 		    $("#numbRoom").attr("value",data.numRoom); 
 		    $("#numbGuests").attr("value",data.numOfGuests);
 		    $("#price").attr("value",data.price);
@@ -74,6 +76,15 @@ $(document).ready(function() {
 		    
 
 	
+		    $.each(data.datesForRent,function(i,item){
+		    	
+		    	
+		    	console.log(item);
+			
+			
+			});
+		    
+		    
 		    $.each(data.amenites,function(i,item){
 		    	
 		    	
@@ -262,6 +273,7 @@ $(document).ready(function() {
 						  checkInTime: $("#checkin").val(),
 						  chackOutTime: $("#checkout").val(),
 						  amenites : amenites,
+						  status : $( "#statusApart option:selected" ).val().toLowerCase(),
 						  images: images,
 						    
 					  });
