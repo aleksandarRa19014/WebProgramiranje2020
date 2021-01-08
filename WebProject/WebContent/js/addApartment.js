@@ -174,7 +174,7 @@ $(document).ready(function() {
 				  
 				  var s = JSON.stringify({
 					  nameApartment: $("#nameApart").val(),
-					  typeApart: $( "#typeApart option:selected" ).text().toLowerCase(),
+					  typeApart: $( "#typeApart option:selected" ).val().toLowerCase(),
 					  numRoom: $("#numbRoom").val(),
 					  numOfGuests: $("#numbGuests").val(),
 					  price: $("#price").val(),

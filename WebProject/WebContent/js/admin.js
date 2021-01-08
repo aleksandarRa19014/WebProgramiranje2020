@@ -104,6 +104,7 @@ $(document).ready(function() {
 	
 		});
 		
+		var users = [];
 		
 		$("#getAllUsers").one( "click", function() {	
 			$.ajax({
@@ -114,6 +115,7 @@ $(document).ready(function() {
 			  
 			}).done(function( data, textStatus, jqXHR ) {
 				
+				users = data;
 				$.each(data,function(i,item){
 					
 					if(item.role.trim() == "admin"){
@@ -170,7 +172,7 @@ $(document).ready(function() {
 		
 		
 		
-		$('#gsearch').keyup(function(){
+		/*$('#gsearch').keyup(function(){
 		    // Search Text
 		   var search = $(this).val();
 
@@ -187,8 +189,37 @@ $(document).ready(function() {
 	       });
 		    
 
-		  });
+		  });*/
 		
+		
+		$("#searchUsers").click(function(e) {
+			
+			$('table tbody tr').hide();
+			
+			userName = $("#gsearch").val(),
+			
+			role = $( "#roleSearch option:selected" ).val();
+			
+			ganderSearch = $( "#ganderSearch option:selected" ).val();
+			
+			$.each(users,function(i,item){
+				if ( (userName.trim() == item.userName ||  userName.trim() =="") && (role == item.role || role =="none") && (ganderSearch == item.gander || ganderSearch =="none") ){
+					$("#t02 tbody").append(
+					        "<tr class='user'>"
+					    		+"<td>"+item.userName+"</td>"
+					            +"<td>"+item.name+"</td>"
+					            +"<td>"+item.lastName+"</td>"
+					            +"<td>"+item.gander+"</td>"
+					            +"<td>"+item.role+"</td>"
+					            + "</tr>"
+					         ); 
+					
+				}
+				
+		  		 
+			});
+			  
+		});
 		
 		function goTo(){
 			

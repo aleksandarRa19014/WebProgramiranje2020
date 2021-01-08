@@ -15,6 +15,18 @@ th, td {
    
 }
 
+.number {
+    margin-top: 11px;
+    width: 50px;
+}
+
+#datepicker-container {
+	position: fixed;
+	z-index: 10000;
+}
+
+
+
 .apartment-price{
 	color: #FFFFFF;
 	font: 18px montserratbold , Arial, serif;
@@ -85,6 +97,87 @@ img {
 	background-color: black;
 	color: #2ecc71;
 }
+
+.form-inline {
+   max-width: 80em;
+   margin: auto;
+   border-radius: 10px;
+   align-content: center;
+   background-color: #fff;
+   box-shadow: 0 19px 40px rgba(0, 0, 0, 0.30), 0 1px 5px rgba(0, 0, 0, 0.22);
+}
+
+input {
+    font-size: 16px;
+    padding-bottom: 5px;
+    padding-left: 0;
+    position: relative;
+    border: transparent;
+    border-bottom: 1px solid rgba(109, 93, 93, 0.4);
+    text-align: left;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.form_button {
+    display: block;
+    margin: 30 auto;
+    width: 260px;
+    border: none;
+    outline: none;
+    background: none;
+    height: 40px;
+    border-radius: 30px;
+    border-color: transparent;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: -webkit-linear-gradient(left, grey, black);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.filterButton {
+    
+    margin: 30 auto;
+    width: 100px;
+    border: none;
+    outline: none;
+    background: none;
+    height: 40px;
+    border-radius: 30px;
+    border-color: transparent;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: -webkit-linear-gradient(left, grey, black);
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#searchUsers {
+    
+    margin: 30 auto;
+    width: 90px;
+    border: none;
+    outline: none;
+    background: none;
+    height: 30px;
+    border-radius: 30px;
+    border-color: transparent;
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    color: #fff;
+    font-weight: 600;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: -webkit-linear-gradient(left, grey, black);
+    font-size: 15px;
+    cursor: pointer;
+}
+
 
 .box h1 {
     color: white;

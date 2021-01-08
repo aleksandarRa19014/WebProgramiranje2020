@@ -52,8 +52,8 @@ $(document).ready(function() {
 			window.location = "adminPage.html";
 		}else if(role == "host"){
 			window.location = "hostPage.html";
-		}else if(role == ""){
-			//window.location = "http://localhost:8090/WebProject/";
+		}else if(role == "guest"){
+			window.location = "guestPage.html";
 		}	
 	}
 	

@@ -40,7 +40,7 @@ $(document).ready(function() {
 	    
 	});
 	
-	
+
 	
 	$.ajax({
 	  	url: '/WebProject/rest/apartmentService/getApart?id=' + idApart,
@@ -74,8 +74,31 @@ $(document).ready(function() {
 		    findOnMap(data.location.latitude, data.location.longitude, data.nameApartment);
 		    
 		    
-
-	
+		    console.log(data.datesForRent[0].year);
+		    console.log(data.datesForRent[data.datesForRent.length-1]);
+		    
+		    d = data.datesForRent[0].dayOfMonth;
+		    m = data.datesForRent[0].monthValue;
+		    y = data.datesForRent[0].year;
+		    
+		    
+		    
+		    
+		    
+		    var dateString1 = y + "-" + (m <= 9 ? '0' + m : m) + "-" + (d <= 9 ? '0' + d : d); 
+		   
+		    $('#checkindate').val(dateString1);
+		   
+		    console.log(data.datesForRent[data.datesForRent.length-1]);
+		    
+		    d = data.datesForRent[data.datesForRent.length-1].dayOfMonth;
+		    m = data.datesForRent[data.datesForRent.length-1].monthValue;
+		    y = data.datesForRent[data.datesForRent.length-1].year;
+		   
+		    var dateString2 = y + "-" + (m <= 9 ? '0' + m : m) + "-" + (d <= 9 ? '0' + d : d); 
+		    
+		    $('#checkoutdate').val(dateString2);
+		    
 		    $.each(data.datesForRent,function(i,item){
 		    	
 		    	
@@ -262,7 +285,7 @@ $(document).ready(function() {
 					  var s = JSON.stringify({
 						  id: idApart,
 						  nameApartment: $("#nameApart").val(),
-						  typeApart: $( "#typeApart option:selected" ).text().toLowerCase(),
+						  typeApart: $( "#typeApart option:selected" ).val().toLowerCase(),
 						  numRoom: $("#numbRoom").val(),
 						  numOfGuests: $("#numbGuests").val(),
 						  price: $("#price").val(),

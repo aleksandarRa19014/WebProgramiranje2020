@@ -22,11 +22,11 @@
 		                        <ul class="nav navbar-nav">
 		                            
 		                       
-		                            <li class="active"><a  class="link getApartments"  href="#"  data-rel="crtApartments">Aktivni apartmani</a></li>
+		                            <li><a  class="link getApartments"  href="#"  data-rel="crtApartments">Aktivni apartmani</a></li>
 		                            
 		                            <li ><a  class="link getApartments"  href="#"  data-rel="crtInactiveApartments">Neaktivni apartmani</a></li>
 		                            
-		                            <li><a href="#">Rezervacije</a></li>
+		                            <li><a  class="link"  href="#" id="" data-rel=""  >Rezervacije</a></li>
 		                            <li><a href="addApartment.html" >Kreiranje apartmana</a></li>
 		                            <li><a class="link" href="#" id="getAllUsers" data-rel="allUsers">Moji korisnici</a></li>
 		                        </ul>
@@ -121,38 +121,86 @@
 				<div class="container-fluid">
 				  <h1>Apartmani</h1>	
 				  
+				  		 <form class="form-inline" >
+						   <label for="destination">Destinacija: </label>
+						    <input type="text" id="dest" placeholder="Mesto, Država" name="dest">
+						   
+						   
+							<label for="rooms">Broj soba od: </label>
+	                        <input type="number" id="minRoomNumb" class="number" name="roomNumber">
+	                        
+	                        <label for="rooms">Broj soba do: </label>
+	                        <input type="number" id="maxRoomNumb" class="number" name="roomNumber">
+							   
+						
+	                         
+	                        
+	                         <label for="guests">Cena od: </label>
+	                        <input type="number" id="minPrice" class="number" name="guestNumber">
+	                        
+	                        
+	
+							<label for="guests">Cena do: </label>
+	                        <input type="number" id="maxPrice" class="number" name="guestNumber">
+	                        
+	                      
+	                         <br>
+	                        <label for="guests">Broj gostiju: </label>
+	                        <input type="number" id="guestNumber" class="number" name="guestNumber">
+	                        
+	
+	                        
+	                        <label for="startDate">Datum dolaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="startdate" name="start">
+							   
+							   
+							<label for="endDate">Datum odlaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="endDate" name="end">
+	                        
+	
+							 <button class="form_button" id="searchButton" type="button" class="btn btn-primary" >Pretraži</button>
+  						</form>
 				  
 				  
 				  <div  class="row"  id = 'crtApartments'>
 			
 				
-			            <form class="form-inline" action="/action_page.php" >
-						   <label for="destination">Destinacija:</label>
-						    <input type="text" id="email" placeholder="Mesto, Država" name="dest">
-						   
-						   
-						   <label for="rooms">Broj soba:</label>
-                        <input type="number" id="roomNumber" class="number" name="roomNumber">
-						   
-						   <label for="guests">Broj gostiju:</label>
-                        <input type="number" id="guestNumber" class="number" name="guestNumber">
-                        
-                        
-                        <label for="startDate">Početni datum:</label>
-                        <input  type="date" id="startdate" name="start">
-						   
-						   
-						   <label for="endDate">Krajnji datum:</label>
-                        <input class="form-control" type="date" id="enddate" name="end">
-                        
-
-						    <button type="" class="btn btn-primary" >Pretraži</button>
-  						</form>
   						
   						
 		        		
-		        		<div class="col-sm-3" style="background-color:red;"> 
-		        				filter
+		        		<div class="col-sm-3" style="background-color:lavender;"> 
+		        				
+		        				
+		        		<form  >
+						   <label for="filterType">Filtriraj po tipu:</label>
+						   <select name="typAprt" id="filterType">
+							      <option value="none" selected>None</option>	
+							      <option value="room">Soba</option>
+							      <option value="apartment">Ceo Apartman</option>
+						 </select>
+						   <br>
+						   
+						   <label for="filterStatus">Filtriraj po statusu: </label>  
+						 <select name="filterStatus" id="filterStatus" >
+							      
+							      <option value="active" selected>Aktivan</option>
+							      
+							  </select>
+	                      
+	                      <br>
+						   
+							<label for="amanties">Selektuj sadrzaj: </label>  
+		        				<select multiple="multiple" id="multiselect" name="amenity" class="form-control">
+		        					
+		        				</select>
+	                        
+	
+							 <button  id="filterButton" type="button" class="btn btn-primary filterButton" >Fitriraj</button>
+							 
+							 <button  id="resetButton" type="button" class="btn btn-primary filterButton" >Reset</button>
+  						</form>
+		        		
+		        		
 		        		</div>
 		        		
 		        		<div class="col-sm-6" id ='apartments'>  
@@ -162,18 +210,19 @@
 
 		        		</div>
 		        		
-		        		 <div class="col-sm-3" style="background-color:lavender;">
+		        		 
 					    	
 					    	
 		        		 <div class="col-sm-3" style="background-color:lavender;">
+		        		 
+		        		 		<label for="sortPrce">Sortiraj po ceni:</label>
 					    		<select name="sortPrce" id="sortPrce">
-							      <option value="" disabled selected>Sortiraj po ceni: </option>	
+							      <option value="none"  selected>None</option>	
 							      <option value="asc">Rastuce</option>
 							      <option value="desc">Opadajuce</option>
 							  </select>
-					    </div>		
-							
 					    </div>
+
 			      
 				  </div>
 				</div>
@@ -184,39 +233,20 @@
 				
 				<div class="container-fluid">
 				  <h1>Neaktivni apartmani</h1>	
-				  
-				  
-				  
+  
 				  <div  class="row"  id = 'crtInactiveApartments'>
 			
 				
-			            <form class="form-inline" action="/action_page.php" >
-						   <label for="destination">Destinacija:</label>
-						    <input type="text" id="email" placeholder="Mesto, Država" name="dest">
-						   
-						   
-						   <label for="rooms">Broj soba:</label>
-                        <input type="number" id="roomNumber" class="number" name="roomNumber">
-						   
-						   <label for="guests">Broj gostiju:</label>
-                        <input type="number" id="guestNumber" class="number" name="guestNumber">
-                        
-                        
-                        <label for="startDate">Početni datum:</label>
-                        <input  type="date" id="startdate" name="start">
-						   
-						   
-						   <label for="endDate">Krajnji datum:</label>
-                        <input class="form-control" type="date" id="enddate" name="end">
-                        
-
-						    <button type="" class="btn btn-primary" >Pretraži</button>
-  						</form>
+			            
   						
   						
 		        		
-		        		<div class="col-sm-3" style="background-color:red;"> 
-		        				filter
+		        		<div class="col-sm-3" style="background-color:lavender;"> 
+		        				
+		        				
+		        	
+		        		
+		        		
 		        		</div>
 		        		
 		        		<div class="col-sm-6" id ='inactiveApartments'>  
@@ -227,16 +257,7 @@
 		        		</div>
 		        		
 		        		 <div class="col-sm-3" style="background-color:lavender;">
-					    	
-					    	
-		        		
-					    		<select name="sortPrce" id="sortPrceInactive">
-							      <option value="" disabled selected>Sortiraj po ceni: </option>	
-							      <option value="asc">Rastuce</option>
-							      <option value="desc">Opadajuce</option>
-							  </select>
-	
-							
+		        		 
 					    </div>
 			      
 				  </div>

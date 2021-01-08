@@ -1,13 +1,199 @@
 <html>
-	<head>
-		<meta charset="UTF-8">
-		<script src="jquery-3.3.1.min.js"></script>
-		 <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.1/dist/jquery.validate.min.js"></script>
-		
-	</head>
+<head>
+	<meta charset="UTF-8">
+	<script src="jquery-3.3.1.min.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> 
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="css/admin.css">	
+	
+	<script src="js/host.js"></script>
+	
+	<script src="js/ads.js"></script>
+	
+</head>
 	<body>
+		<div class="navbar navbar-inverse">
+		        <div class="container-fluid">
+		            <div class="row">
+		                <div class="col-lg-12">
+
+		                    <div class="navbar-collapse collapse" id="mobile_menu">
+		                       
+		                        <ul class="nav navbar-nav">
+		                            
+		                       
+		                            <li><a  class="link getApartments"  href="#"  data-rel="crtApartments">Apartmani</a></li>
+		                            
+		                           
+		                            
+		                            <li><a  class="link"  href="#" id="" data-rel=""  >Moje rezervacije</a></li>
+		                           
+		                        </ul>
+		                        
+		                      
 		
-		                    <h1>GuestPage</h1>
-		                    
+		                        <ul class="nav navbar-nav navbar-right">
+		                        	  <li><a class="link" href="#" id="curentUser" data-rel="user"></a></li>	
+		                              <li ><a href="#" id = "logout">Logout</a></li>
+		                        </ul>  
+		                    </div>
+		                </div>
+		            </div>
+		        </div>
+		    </div>
+			
+			
+			
+			<div id="cont">
+				
+				<div class="container-fluid">
+				  <h1>Licni podaci</h1>	
+				  <div  class="row">
+					    <div id = "user" class="col-sm-3" style="background-color:lavender;">
+					    			<table style="width:100%" id="t01">
+											  <caption>Trenutni korisnik</caption>
+											  <tr>
+											    <th>Ime</th>
+											    <th>Prezime</th>
+											    <th>Pol</th>
+											    <th>Uloga</th>
+											  </tr>
+									</table>
+									<a href="changeUser.html" >Izmeni podatke</a>
+					    </div>
+					    <div class="col-sm-3" style="background-color:lavenderblush;">
+									2					
+						</div>
+					    <div class="col-sm-3" style="background-color:lavender;">
+					    			3
+					    </div>
+					    <div class="col-sm-3" style="background-color:lavenderblush;">
+									4
+						</div>
+				  </div>
+				</div>
+					
+
+		
+				
+				
+				
+				<div class="container-fluid">
+				  <h1>Apartmani</h1>	
+				  
+				  		 <form class="form-inline" >
+						   <label for="destination">Destinacija: </label>
+						    <input type="text" id="dest" placeholder="Mesto, Država" name="dest">
+						   
+						   
+							<label for="rooms">Broj soba od: </label>
+	                        <input type="number" id="minRoomNumb" class="number" name="roomNumber">
+	                        
+	                        <label for="rooms">Broj soba do: </label>
+	                        <input type="number" id="maxRoomNumb" class="number" name="roomNumber">
+							   
+						
+	                         
+	                        
+	                         <label for="guests">Cena od: </label>
+	                        <input type="number" id="minPrice" class="number" name="guestNumber">
+	                        
+	                        
+	
+							<label for="guests">Cena do: </label>
+	                        <input type="number" id="maxPrice" class="number" name="guestNumber">
+	                        
+	                      
+	                         <br>
+	                        <label for="guests">Broj gostiju: </label>
+	                        <input type="number" id="guestNumber" class="number" name="guestNumber">
+	                        
+	
+	                        
+	                        <label for="startDate">Datum dolaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="startdate" name="start">
+							   
+							   
+							<label for="endDate">Datum odlaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="endDate" name="end">
+	                        
+	
+							 <button class="form_button" id="searchButton" type="button" class="btn btn-primary" >Pretraži</button>
+  						</form>
+				  
+				  
+				  <div  class="row"  id = 'crtApartments'>
+			
+				
+  						
+  						
+		        		
+		        		<div class="col-sm-3" style="background-color:lavender;"> 
+		        				
+		        				
+		        		<form  >
+						   <label for="filterType">Filtriraj po tipu:</label>
+						   <select name="typAprt" id="filterType">
+							      <option value="none" selected>None</option>	
+							      <option value="room">Soba</option>
+							      <option value="apartment">Ceo Apartman</option>
+						 </select>
+						   
+						   <br>
+						   
+							
+						   
+							<label for="amanties">Selektuj sadrzaj: </label>  
+		        				<select multiple="multiple" id="multiselect" name="amenity" class="form-control">
+		        					
+		        				</select>
+	                        
+	
+							 <button  id="filterButton" type="button" class="btn btn-primary filterButton" >Fitriraj</button>
+							 
+							 <button  id="resetButton" type="button" class="btn btn-primary filterButton" >Reset</button>
+  						</form>
+		        		
+		        		
+		        		</div>
+		        		
+		        		<div class="col-sm-6" id ='apartments'>  
+	
+							
+
+
+		        		</div>
+		        		
+		        		 <div class="col-sm-3" style="background-color:lavender;">
+					    	
+					    	
+		        		 <div class="col-sm-3" style="background-color:lavender;">
+					    		<select name="sortPrce" id="sortPrce">
+							      <option value="" disabled selected>Sortiraj po ceni: </option>	
+							      <option value="asc">Rastuce</option>
+							      <option value="desc">Opadajuce</option>
+							  </select>
+					    </div>		
+							
+					    </div>
+			      
+				  </div>
+				</div>
+   
+		  </div>
+		  
+
+				
 	</body>
 </html>
+
+
+
+
+
+
+
+
+
+
+

@@ -47,32 +47,51 @@
 				<div class="container-fluid">
 				  <h1>Apartmani</h1>	
 				  
+				   <form class="form-inline" >
+						   <label for="destination">Destinacija: </label>
+						    <input type="text" id="dest" placeholder="Mesto, Država" name="dest">
+						   
+						   
+							<label for="rooms">Broj soba od: </label>
+	                        <input type="number" id="minRoomNumb" class="number" name="roomNumber">
+	                        
+	                        <label for="rooms">Broj soba do: </label>
+	                        <input type="number" id="maxRoomNumb" class="number" name="roomNumber">
+							   
+						
+	                         
+	                        
+	                         <label for="guests">Cena od: </label>
+	                        <input type="number" id="minPrice" class="number" name="guestNumber">
+	                        
+	                        
+	
+							<label for="guests">Cena do: </label>
+	                        <input type="number" id="maxPrice" class="number" name="guestNumber">
+	                        
+	                      
+	                         <br>
+	                        <label for="guests">Broj gostiju: </label>
+	                        <input type="number" id="guestNumber" class="number" name="guestNumber">
+	                        
+	
+	                        
+	                        <label for="startDate">Datum dolaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="startdate" name="start">
+							   
+							   
+							<label for="endDate">Datum odlaska: </label>
+	                        <input class="datepickerSearchStart"  type="date" id="endDate" name="end">
+	                        
+	
+							 <button class="form_button" id="searchButton" type="button" class="btn btn-primary" >Pretraži</button>
+  						</form>
+				  
 				  
 				  
 				  <div  class="row">
 				  
-				  			 <form class="form-inline" action="/action_page.php" >
-						   <label for="destination">Destinacija:</label>
-						    <input type="text" id="email" placeholder="Mesto, Država" name="dest">
-						   
-						   
-						   <label for="rooms">Broj soba:</label>
-                        <input type="number" id="roomNumber" class="number" name="roomNumber">
-						   
-						   <label for="guests">Broj gostiju:</label>
-                        <input type="number" id="guestNumber" class="number" name="guestNumber">
-                        
-                        
-                        <label for="startDate">Početni datum:</label>
-                        <input  type="date" id="startdate" name="start">
-						   
-						   
-						   <label for="endDate">Krajnji datum:</label>
-                        <input class="form-control" type="date" id="enddate" name="end">
-                        
-
-						    <button type="" class="btn btn-primary" >Pretraži</button>
-  						</form>
+				  			
 				  		
 				  		 <div class="col-sm-3" style="background-color:lavender;">
 					    			filter

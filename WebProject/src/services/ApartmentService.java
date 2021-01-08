@@ -16,6 +16,7 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -52,6 +53,7 @@ import beans.User;
 import dao.AdminDao;
 import dao.ApartmentDao;
 import dto.ApartmentDto;
+import dto.SearchDto;
 
 
 @Path("/apartmentService")
@@ -118,6 +120,7 @@ public class ApartmentService {
 
 			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
 				newApartment.getDatesForRent().add(date);
+				newApartment.getDatesAvailable().add(date);
 			}
 			
 			
@@ -236,6 +239,7 @@ public class ApartmentService {
 
 			for (LocalDate date = startDate; date.isBefore(endDate); date = date.plusDays(1)) {
 				newApartment.getDatesForRent().add(date);
+				newApartment.getDatesAvailable().add(date);
 			}
 			
 			
@@ -422,6 +426,150 @@ public class ApartmentService {
 
 	}
 	
+	
+	@POST
+	@Path("/search")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response search(SearchDto searchDto) {
+		System.out.println(searchDto.getMaxPrice());
+
+		ApartmentDao aptDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
+		Map<String, Apartment> apts = aptDao.getApartments();
+
+		// =====================================search
+		// date============================================
+
+		List<Apartment> searchDate = new ArrayList<>();
+
+		if (searchDto.getStartDate() != null && searchDto.getStartDate() != "" && searchDto.getEndDate() != null
+				&& searchDto.getEndDate() != "")
+			for (Apartment a : apts.values()) {
+				if (checkAvailable(searchDto.getStartDate(), searchDto.getEndDate(), a)) {
+					searchDate.add(a);
+					System.out.println("dates available" + a.getNameApartment());
+				}
+			}
+		else
+			searchDate = new ArrayList<Apartment>(apts.values());
+
+		// ======================================search
+		// price============================================
+
+		List<Apartment> searchPrice = new ArrayList<>();
+
+		if (searchDto.getMinPrice() != 0 && searchDto.getMaxPrice() != 0) {
+			for (Apartment a : searchDate) {
+				if (a.getPrice() != 0) {
+					if (a.getPrice() > searchDto.getMinPrice() && a.getPrice() <= searchDto.getMaxPrice()) {
+						searchPrice.add(a);
+					}
+				}
+			}
+		} else if (searchDto.getMinPrice() != 0) {
+			for (Apartment a : searchDate) {
+				if (a.getPrice() != 0) {
+					if (a.getPrice() >= searchDto.getMinPrice()) {
+						searchPrice.add(a);
+					}
+				}
+			}
+		} else if (searchDto.getMaxPrice() != 0) {
+			for (Apartment a : searchDate) {
+				if (a.getPrice() != 0) {
+					if (a.getPrice() <= searchDto.getMaxPrice()) {
+						searchPrice.add(a);
+					}
+				}
+			}
+		} else {
+			searchPrice = searchDate;
+		}
+
+		// ======================================search
+		// rooms============================================
+
+		List<Apartment> searchRoom = new ArrayList<>();
+
+		if (searchDto.getMinRoomNo() != 0 && searchDto.getMaxRoomNo() != 0) {
+			for (Apartment a : searchPrice) {
+				if (a.getNumRoom() != 0) {
+					if (a.getNumRoom() > searchDto.getMinRoomNo() && a.getNumRoom() <= searchDto.getMaxRoomNo()) {
+						searchRoom.add(a);
+					}
+				}
+			}
+		} else if (searchDto.getMinRoomNo() != 0) {
+			for (Apartment a : searchPrice) {
+				if (a.getNumRoom() != 0) {
+					if (a.getNumRoom() >= searchDto.getMinRoomNo()) {
+						searchRoom.add(a);
+					}
+				}
+			}
+		} else if (searchDto.getMaxRoomNo() != 0) {
+			for (Apartment a : searchPrice) {
+				if (a.getNumRoom() != 0) {
+					if (a.getNumRoom() <= searchDto.getMaxRoomNo()) {
+						searchRoom.add(a);
+					}
+				}
+			}
+		} else {
+			searchRoom = searchPrice;
+		}
+
+		// ======================================search
+		// persons============================================
+
+		List<Apartment> searchPersons = new ArrayList<>();
+
+		if (searchDto.getPersonNo() != 0) {
+			for (Apartment a : searchRoom) {
+				if (a.getNumOfGuests() != 0) {
+					if (a.getNumOfGuests() == searchDto.getPersonNo())
+						searchPersons.add(a);
+				}
+			}
+		} else {
+			searchPersons = searchRoom;
+		}
+
+		// ======================================search
+		// location==============================================
+
+		List<Apartment> searchLocation = new ArrayList<>();
+
+		if (searchDto.getPlace() != "") {
+			for (Apartment a : searchPersons) {
+				if (a.getLocation().getAddress().getPlace().toLowerCase().equals(searchDto.getPlace().toLowerCase())) {
+				
+							searchLocation.add(a);
+				}
+			}
+		} else
+			searchLocation = searchPersons;
+
+		return Response.status(200).entity(searchLocation).build();
+	}
+
+	public boolean checkAvailable(String startDate, String endDate, Apartment a1) {
+
+		if (a1.getDatesAvailable().size() == 0)
+			return false;
+
+		long daysBetween = ChronoUnit.DAYS.between(LocalDate.parse(startDate), LocalDate.parse(endDate));
+		// System.out.println(daysBetween);
+
+		for (int i = 0; i < daysBetween; i++) {
+			// System.out.println(LocalDate.parse(startDate).plusDays(i));
+			if (!a1.getDatesAvailable().contains(LocalDate.parse(startDate).plusDays(i))) {
+				return false;
+			}
+		}
+
+		return true;
+	}
 	
 	
 }
