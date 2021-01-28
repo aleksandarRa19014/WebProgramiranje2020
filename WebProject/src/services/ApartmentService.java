@@ -257,8 +257,10 @@ public class ApartmentService {
 			}
 			newApartment.setNumRoom(Integer.parseInt(apartmentDto.getNumRoom()) );
 			newApartment.setNumOfGuests(Integer.parseInt(apartmentDto.getNumOfGuests()) );
+			
+			Apartment oldAprt =  apartmentDao.getApartments().get(newApartment.getId().toString());
 						
-			newApartment.setHost(apartmentDto.getHost());
+			newApartment.setHost(oldAprt.getHost());
 			
 			newApartment.setPrice(Double.parseDouble(apartmentDto.getPrice()) );
 

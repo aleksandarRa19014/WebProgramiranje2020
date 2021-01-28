@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import com.fasterxml.jackson.databind.introspect.VisibilityChecker;
 import com.fasterxml.jackson.databind.type.MapType;
 import com.fasterxml.jackson.databind.type.TypeFactory;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
+
 
 import beans.Apartment;
 import beans.Reservation;
@@ -39,6 +41,33 @@ public class ReservationDao {
 		this.reservations = reservations;
 	}
 	
+	public ArrayList<Reservation> getGuestReservations(String userName){
+		ArrayList<Reservation> resGuest = new ArrayList<Reservation>();
+		
+		for(Reservation res : reservations.values()){
+			if(res.getGuest().getUserName().equals(userName.trim())) {
+				resGuest.add(res);
+			}
+		}
+		
+		return resGuest;
+		
+	}
+	
+	
+	public ArrayList<Reservation> getHostReservations(String userName){
+		ArrayList<Reservation> resHost = new ArrayList<Reservation>();
+		
+		for(Reservation res : reservations.values()){
+			if(res.getReservedApart().getHost().getUserName().equals(userName)) {
+				resHost.add(res);
+			}
+		}
+		
+		return resHost;
+		
+	}
+	
 	 @SuppressWarnings("unchecked")
 	    public void loadData() {
 
@@ -56,7 +85,7 @@ public class ReservationDao {
 		            objectMapper.setVisibility(
 		                    VisibilityChecker.Std.defaultInstance().withFieldVisibility(JsonAutoDetect.Visibility.ANY));
 		            TypeFactory factory = TypeFactory.defaultInstance();
-		            MapType type = factory.constructMapType(HashMap.class, String.class, Apartment.class);
+		            MapType type = factory.constructMapType(HashMap.class, String.class, Reservation.class);
 	
 		            objectMapper.getFactory().configure(JsonGenerator.Feature.ESCAPE_NON_ASCII, true);
 		            objectMapper.registerModule(new JavaTimeModule());

@@ -153,14 +153,7 @@ $(document).ready(function(){
 	    
 	});
 	
-	function available(date) {
-	    dmy = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
-	    if ($.inArray(dmy, availableDates) != -1) {
-	        return [true, "","Available"];
-	    } else {
-	        return [false,"","unAvailable"];
-	    }
-	}
+	
 	
 	
 	$('#resApart').on('click', function() {
@@ -204,17 +197,18 @@ $(document).ready(function(){
 					  });
 					  
 					  $.ajax({
-							url: "/WebProject/rest/reservation/createRes",  // izmeni url
+							url: "/WebProject/rest/reservation/createRes", 
 							type: "POST",
 							contentType: "application/json",	
 							data: s,
-							dataType: "JSON"	
+							dataType: "text"	
 					  }).done(function( data, textStatus, jqXHR) {
 						   
-						  alert(textStatus);
+				
+						  goTo();
 							
 						}).fail(function( data, textStatus, jqXHR) {
-							alert(data.responseText);
+							alert(textStatus);
 						});
 					  
 					  
@@ -224,12 +218,29 @@ $(document).ready(function(){
     	
     });
 	
+	function goTo(){
+		
+		
+			window.location = "guestPage.html";
+	
+	}
+	
+	
 	$( "#datepicker" ).datepicker({ 
 		showOtherMonths: true,
 		selectOtherMonths: true,
 		dateFormat: 'yy-mm-dd',
 	    beforeShowDay: available
 	});
+	
+	function available(date) {
+	    dmy = date.getFullYear() + "-" + (date.getMonth()+1) + "-" + date.getDate();
+	    if ($.inArray(dmy, availableDates) != -1) {
+	        return [true, "","Available"];
+	    } else {
+	        return [false,"","unAvailable"];
+	    }
+	}
 	
 	
    var totalItems = $('.item').length;
