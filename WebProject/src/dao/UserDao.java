@@ -205,16 +205,23 @@ public class UserDao implements CrudDao<User, String> {
 			
 			User admin1 = new User("lesa","lesa","Aleksandar","Radovanovic",Role.admin,Gender.male,false);
 			User admin2 = new User("aleksej","aleksej","Aleksej","Lukic",Role.admin,Gender.male,false);
+			
+			//DUMMY DATA
+			User u1 = new User("mika","mika","Mika","Mikic",Role.host,Gender.male,false);
+		
+			
 			FileWriter fileWriter = new FileWriter(userFile,true);  
 			
 			bw = new BufferedWriter(fileWriter);				
 			bw.write(admin1.toString());
 			bw.newLine();
 			bw.write(admin2.toString());
-			
+			bw.newLine();
+			bw.write(u1.toString());
 			
 			users.put(admin1.getUserName(),admin1);
 			users.put(admin2.getUserName(), admin2);
+			users.put(u1.getUserName(), u1);
 			
 	    }catch (IOException e) {
     		System.out.println("An error occurred.");

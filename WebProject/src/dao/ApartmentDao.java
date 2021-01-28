@@ -6,16 +6,22 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-
+import beans.Address;
 import beans.Amenity;
 import beans.Apartment;
+import beans.Gender;
+import beans.Location;
+import beans.Role;
 import beans.StatusApartment;
+import beans.TypeApartment;
+import beans.User;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -42,6 +48,72 @@ public class ApartmentDao {
 	
 	public ApartmentDao(String contextPath) {
         this.contextPath = contextPath;
+        
+        Apartment a1 = new Apartment();
+        a1.setNameApartment("Vid");
+        a1.setTypeApart(TypeApartment.apartment);
+        a1.setNumRoom(3);
+        a1.setNumOfGuests(4);
+        Address address = new Address("Vidska 27",21000,"Beograd");
+        Location location = new Location(0,0,address);
+        a1.setLocation(location);
+        
+        List<LocalDate> available = new ArrayList<>();
+        available.add(LocalDate.of(2021, 2, 20));
+        available.add(LocalDate.of(2021, 2, 21));
+        available.add(LocalDate.of(2021, 2, 22));
+        available.add(LocalDate.of(2021, 2, 23));
+        available.add(LocalDate.of(2021, 2, 24));
+        available.add(LocalDate.of(2021, 2, 25));
+        
+        a1.setDatesAvailable(available);
+        
+        User u1 = new User("mika","mika","Mika","Mikic",Role.host,Gender.male,false);
+        
+        a1.setHost(u1);
+        
+        a1.setPrice(2500);
+        a1.setStatus(StatusApartment.active);
+        
+        
+		
+		
+		
+		
+        
+        
+        
+        Apartment a2 = new Apartment();
+        a2.setNameApartment("Lila");
+        a2.setTypeApart(TypeApartment.apartment);
+        a2.setNumRoom(3);
+        a2.setNumOfGuests(4);
+        Address address1 = new Address("Vidska 27",21000,"Beograd");
+        Location location1 = new Location(0,0,address1);
+        a2.setLocation(location1);
+        
+        List<LocalDate> available2 = new ArrayList<>();
+        available2.add(LocalDate.of(2021, 2, 1));
+        available2.add(LocalDate.of(2021, 2, 2));
+        available2.add(LocalDate.of(2021, 2, 3));
+        available2.add(LocalDate.of(2021, 2, 4));
+        available2.add(LocalDate.of(2021, 2, 4));
+        available2.add(LocalDate.of(2021, 2, 6));
+        
+        a2.setDatesAvailable(available);
+        
+        
+        a2.setHost(u1);
+        
+        a2.setPrice(3500);
+        a2.setStatus(StatusApartment.active);
+
+        
+        apartments.put(a1.getId().toString(), a1);
+        apartments.put(a2.getId().toString(), a2);
+        
+        this.setApartments(apartments);
+        this.saveData();
 	}
 	
 	

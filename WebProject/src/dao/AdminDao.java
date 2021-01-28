@@ -43,6 +43,23 @@ public class AdminDao {
 	
 	public AdminDao(String contextPath) {
 		 this.contextPath = contextPath;
+		 
+		 //DUMMY DATA
+		 
+		 Amenity am1 = new Amenity();
+		 am1.setName("TV");
+		 
+		 Amenity am2 = new Amenity();
+		 am2.setName("WiFi");
+		 
+		 Amenity am3 = new Amenity();
+		 am3.setName("Tuš Kabina");
+		 
+		 getAmenities().put(am1.getId().toString(), am1);
+		 getAmenities().put(am2.getId().toString(), am2);
+		 getAmenities().put(am3.getId().toString(), am3);
+		 
+		 this.saveData();
 	}
 	
 	public Map<String, Amenity> getAmenities() {
@@ -154,6 +171,6 @@ public class AdminDao {
 	            }
 	        }
 	    }
-	
 
+	
 }

@@ -90,7 +90,7 @@ $(document).ready(function() {
 							
 							$("#apartments").append(
 									    "<div class='card mb-3' id='"+ apart.id +" '> "
-									    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+									    +		"<img class='card-img-top' src=' " + ((apart.pathToImgs == null)? "" : apart.pathToImgs[0])  + " ' alt=''>"
 									    +		"<div class='card-body'>"
 									    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
 									    +			"<span class='apartment-price'> "+apart.price + " </span>"
@@ -123,7 +123,7 @@ $(document).ready(function() {
 						
 						$("#apartments").append(
 								"<div class='card mb-3' id='"+ apart.id +" '> "
-							    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+							    +		"<img class='card-img-top' src=' " + ((apart.pathToImgs == null)? "" : apart.pathToImgs[0])  +  " ' alt=''>"
 							    +		"<div class='card-body'>"
 							    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
 							    +			"<span class='apartment-price'> "+apart.price + " </span>"
@@ -144,7 +144,7 @@ $(document).ready(function() {
 					}else{
 						$("#inactiveApartments").append(
 								"<div class='card mb-3' id='"+ apart.id +" '> "
-							    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+							    +		"<img class='card-img-top' src=' " + ((apart.pathToImgs == null)? "" : apart.pathToImgs[0])  +  " ' alt=''>"
 							    +		"<div class='card-body'>"
 							    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
 							    +			"<span class='apartment-price'> "+apart.price + " </span>"
@@ -178,7 +178,7 @@ $(document).ready(function() {
 						
 							$("#apartments").append(
 									"<div class='card mb-3' id='"+ apart.id +" '> "
-								    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+								    +		"<img class='card-img-top' src=' " + ((apart.pathToImgs == null)? "" : apart.pathToImgs[0])  +  " ' alt=''>"
 								    +		"<div class='card-body'>"
 								    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
 								    +			"<span class='apartment-price'> "+apart.price + " </span>"
@@ -200,7 +200,7 @@ $(document).ready(function() {
 				$.each(ads,function(i,apart){
 					$("#apartments").append(
 							"<div class='card mb-3' id='"+ apart.id +" '> "
-						    +		"<img class='card-img-top' src=' " + apart.pathToImgs[0] + " ' alt=''>"
+						    +		"<img class='card-img-top' src=' " + ((apart.pathToImgs == null)? "" : apart.pathToImgs[0])  +  " ' alt=''>"
 						    +		"<div class='card-body'>"
 						    +			"<h5 class= 'card-title'>" + apart.nameApartment + "</h5>"
 						    +			"<span class='apartment-price'> "+apart.price + " </span>"
