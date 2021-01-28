@@ -33,7 +33,7 @@ public class Apartment {
 	private Boolean deleted;
 	
 	@JsonBackReference
-	private Collection<Reservation> reservations;
+	private Collection<Reservation> reservations = new ArrayList<Reservation>();
 	
 	
 	

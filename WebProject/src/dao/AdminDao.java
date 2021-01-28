@@ -137,8 +137,12 @@ public class AdminDao {
 		            for(Amenity amn : this.amenities.values()) {
 		            	System.out.println("-----------------------------------------------------"+amn.getName());
 		            }
+	            }else {
+	            	
+	            	return;
 	            }
 	        } catch (Exception e) {
+	        	System.out.println("-----------------------------------------------------GRESKA");
 	            e.printStackTrace();
 	        } finally {
 	            if (in != null) {

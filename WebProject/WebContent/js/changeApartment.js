@@ -1,7 +1,7 @@
 $(document).ready(function() {
 	
 	
-	params = new URLSearchParams(window.location.search)
+	params = new URLSearchParams(window.location.search);
 
 	
 	console.log(params.get('id'));

@@ -252,6 +252,10 @@ $(document).ready(function() {
 		
 		statusApart = $( "#filterStatus option:selected" ).val();
 		
+		if (typeof statusApart === 'undefined'){
+			statusApart = "none";
+		}
+		
 		$("#sortPrce").val("none").change();
 		
 		selectedAmanties = [];
@@ -295,6 +299,7 @@ $(document).ready(function() {
 		  
 		  generatePage(role, ads);
 		 
+		  tempAds = ads;
 		  
 		  $("#multiselect")[0].selectedIndex = -1;
 		  

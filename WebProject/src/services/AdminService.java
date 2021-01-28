@@ -95,8 +95,13 @@ public class AdminService {
 	public Collection<Amenity> getAmenities() {
 		AdminDao adminDao = (AdminDao) ctx.getAttribute("adminDao");
 		
-		adminDao.loadData();
-		return adminDao.getAmenities().values();
+		if(adminDao != null) {
+			adminDao.loadData();
+			return adminDao.getAmenities().values();
+		}else {
+			return null;
+		}
+		
 	}	
 	
 	

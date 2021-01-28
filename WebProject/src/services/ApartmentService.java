@@ -381,17 +381,14 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getApart(@QueryParam("id") String id, @Context HttpServletRequest request) {
 		
-		User curentUser = (User) request.getSession().getAttribute("user");
+		ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
 		
-		if (curentUser.getRole() == Role.guest  || curentUser == null) {
-			return Response.status(403).entity("Forbidden").build();
+		if(apartmentDao != null) {
+			return Response.status(200).entity(apartmentDao.findById(id)).build();
+		}else {
+			return Response.status(400).entity("Greska ne postoji apartman").build();
 		}
 		
-		ApartmentDao apartmentDao = ((ApartmentDao) ctx.getAttribute("aptDao"));
-
-		
-		return Response.status(200).entity(apartmentDao.findById(id)).build();
-				
 	}
 	
 	@DELETE

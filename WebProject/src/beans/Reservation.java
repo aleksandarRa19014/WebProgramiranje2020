@@ -1,11 +1,14 @@
 package beans;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 public class Reservation {
 	
-	private String idApartment;
-	private Date  bookingDate;
+	private UUID idRes;
+	private Apartment reservedApart;
+	private LocalDate  bookingDate;
 	private int numOfNights;
 	private double price;
 	private String text;
@@ -15,35 +18,39 @@ public class Reservation {
 	
 	public Reservation() {
 		super();
+		this.idRes = UUID.randomUUID();
 		// TODO Auto-generated constructor stub
 	}
 
-	public Reservation(String idApartment, Date bookingDate, int numOfNights, double price, String text, User guest,
-			StatusReser statusReser) {
+	public Reservation(UUID idRes, LocalDate bookingDate, int numOfNights, double price, String text, User guest,
+			StatusReser statusReser,  Apartment reservedApart) {
 		super();
-		this.idApartment = idApartment;
+		this.idRes = idRes;
 		this.bookingDate = bookingDate;
 		this.numOfNights = numOfNights;
 		this.price = price;
 		this.text = text;
 		this.guest = guest;
 		this.statusReser = statusReser;
+		this.setReservedApart(reservedApart);
+	}
+	
+	
+
+	public UUID getIdRes() {
+		return idRes;
 	}
 
-	public String getIdApartment() {
-		return idApartment;
+	public void setIdRes(UUID idRes) {
+		this.idRes = idRes;
 	}
 
-	public void setIdApartment(String idApartment) {
-		this.idApartment = idApartment;
-	}
-
-	public Date getBookingDate() {
+	public LocalDate getBookingDate() {
 		return bookingDate;
 	}
 
-	public void setBookingDate(Date bookingDate) {
-		this.bookingDate = bookingDate;
+	public void setBookingDate(LocalDate date) {
+		this.bookingDate = date;
 	}
 
 	public int getNumOfNights() {
@@ -84,6 +91,14 @@ public class Reservation {
 
 	public void setStatusReser(StatusReser statusReser) {
 		this.statusReser = statusReser;
+	}
+
+	public Apartment getReservedApart() {
+		return reservedApart;
+	}
+
+	public void setReservedApart(Apartment reservedApart) {
+		this.reservedApart = reservedApart;
 	}
 	
 	

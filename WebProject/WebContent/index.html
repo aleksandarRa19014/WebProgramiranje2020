@@ -6,6 +6,8 @@
 	
 	
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>	
+	
+	
 
 	<script src="js/ads.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/index.css">	
@@ -94,16 +96,44 @@
 				  			
 				  		
 				  		 <div class="col-sm-3" style="background-color:lavender;">
-					    			filter
+								
+								<form  >
+						   <label for="filterType">Filtriraj po tipu:</label>
+						   <select name="typAprt" id="filterType">
+							      <option value="none" selected>None</option>	
+							      <option value="room">Soba</option>
+							      <option value="apartment">Ceo Apartman</option>
+						 </select>
+						   
+						   <br>
+						   
+							
+						   
+							<label for="amanties">Selektuj sadrzaj: </label>  
+		        				<select multiple="multiple" id="multiselect" name="amenity" class="form-control">
+		        					
+		        				</select>
+	                        
+	
+							 <button  id="filterButton" type="button" class="btn btn-primary filterButton" >Fitriraj</button>
+							 
+							 <button  id="resetButton" type="button" class="btn btn-primary filterButton" >Reset</button>
+  						</form>					    			
+
+
 					    </div>
 				  		
 					    <div class="col-sm-6" id ='apartments'>  
 					   
-									Apartmani
 		        		</div>
 		        		
 		        		 <div class="col-sm-3" style="background-color:lavender;">
-					    			sort
+					    			
+								<select name="sortPrce" id="sortPrce">
+							      <option value="" disabled selected>Sortiraj po ceni: </option>	
+							      <option value="asc">Rastuce</option>
+							      <option value="desc">Opadajuce</option>
+							  </select>
 					    </div>
 					    
 				</div>
